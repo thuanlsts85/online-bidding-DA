@@ -1,8 +1,5 @@
 <?php
-define('BASEPATH', true); //access connection script if you omit this line file will be blank
-require '../data_connect.php'; //require connection script
-include_once('../script.php');
-include_once('header.php');
+require '../includes/data_connect.php'; //require connection script
 
  if(isset($_POST['submit'])){  
         try {
@@ -16,9 +13,7 @@ include_once('header.php');
          $phone = $_POST['phone'];
          $branch_id = $_POST['branch_id'];
          $email = $_POST['email'];
-         $password = $_POST['password'];
-         // Hash password
-         $password = password_hash($password, PASSWORD_BCRYPT, array("cost" => 12));
+         $password=md5($_POST['password']); 
           
          //Check if email exists
          $sql = "SELECT COUNT(email) AS num FROM admin WHERE email = :email";
@@ -48,8 +43,6 @@ include_once('header.php');
 
    if($stmt->execute()){
     echo '<script>alert("Admin account created.")</script>';
-    //redirect to another page
-    echo '<script>window.location.replace("index.php")</script>';
      
    }else{
        echo '<script>alert("An error occurred")</script>';
@@ -62,17 +55,6 @@ include_once('header.php');
      }
 
 ?>
-
-<!-- <form action="register.php" method="post">
-  <input type="text" required="required" name="id" placeholder="Enter Identity Number">
-  <input type="text" required="required" name="Fname" placeholder="Enter First Name">
-  <input type="text" required="required" name="Lname" placeholder="Enter Last Name">
-  <input type="text" required="required" name="phone" placeholder="Enter Phone Number">
-  <input type="text" required="required" name="Fname" placeholder="Fname">
-  <input required="required" type="email" name="email" placeholder="Email">
-  <input required="required" type="password" name="password" placeholder="Password">                  
-  <button name="submit" type="submit">register</button>
-  </form> -->
 
   <form class="form-horizontal" action="register.php" method="post">
 	<h1>Admin Registration</h1>

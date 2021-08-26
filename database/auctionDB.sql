@@ -33,6 +33,7 @@ CREATE TABLE `customer` (
   `branch_id` int NOT NULL,
   `address` text NOT NULL,
   `img` text NOT NULL,
+  `status` tinyint DEFAULT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   primary key(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
