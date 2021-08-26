@@ -25,30 +25,28 @@ CREATE TABLE `customer` (
   `id` varchar(30) NOT NULL,
   `Fname` varchar(30) NOT NULL,
   `Lname` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
-  `email` varchar(30) NOT NULL ,
-  `phone` varchar(30) NOT NULL,
+  `password` text NOT NULL,
+  `email` varchar(30) NOT NULL UNIQUE,
+  `phone` varchar(30) NOT NULL UNIQUE,
   `balance` float NOT NULL,
   `country` varchar(30) NOT NULL,
   `branch_id` int NOT NULL,
   `address` text NOT NULL,
   `img` text NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
-  primary key(`id`),
-  unique (`email`, `phone`)
+  primary key(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `admin` (
   `id` varchar(30) NOT NULL,
   `Fname` varchar(30) NOT NULL,
   `Lname` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
-  `email` varchar(30) NOT NULL ,
-  `phone` varchar(30) NOT NULL,
+  `password` text NOT NULL,
+  `email` varchar(30) NOT NULL UNIQUE,
+  `phone` varchar(30) NOT NULL UNIQUE,
   `branch_id` int NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
-  primary key(`id`),
-  unique (`email`, `phone`)
+  primary key(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `branch` (
@@ -92,9 +90,10 @@ INSERT INTO branch (`city`,`address`,`hotline`) VALUES
 
 insert into `customer` (`id`,`Fname`,`Lname`,`password`,`email`,`phone`,balance,`country`,branch_id,`address`,`img`) values
 ('123456789','Mai','Cuong','123456','s3682365@gmail.com','1234567890',2000000,'VietNam',1,'123 duong 8 Go Vap','http'),
-('987654321','Nguyen','Dat','123456','s3697822@gmail.com','1234567890',3000000,'VietNam',2,'321 duong so 7 Phu My HUng Q7','http');
+('987654321','Nguyen','Dat','123456','s3697822@gmail.com','1234567891',3000000,'VietNam',2,'321 duong so 7 Phu My HUng Q7','http');
 
 
 insert into `bid` (`customer_id`, `product_id`, `current_price`,`status`) values
 ('123456789', 1, 1000, 2),
 ('987654321', 2, 2000, 1);
+

@@ -38,7 +38,7 @@ if(mysqli_num_rows($result) > 0)
 	  			<?php echo $email; ?>
   			</button>
   			<div id="myDropdown" class="dropdown-content">
-    			<a href="Profile.php">Profile</a>
+    			<a href="dashboard.php">Profile</a>
     			<a href="Logout.php">Logout</a>
   			</div>
 		</div>
