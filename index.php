@@ -94,7 +94,7 @@ if (isset($_POST['login'])) {
                 <div class="form-group">
                   <label>Password</label>
                   <input class="form-control" type="password" name="password" required autocomplete="off" />
-                  <p class="help-block"><a href="forgot-password.php">Forgot Password</a></p>
+                  <p class="help-block"><a href="change-password.php">Forgot Password</a></p>
                 </div>
 
                 <!-- <div class="form-group">

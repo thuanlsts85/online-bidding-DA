@@ -3,8 +3,7 @@ Into this file, we write a code for display user information.
 -->
 
 <?php
-include_once('script.php');
-include_once('Login_header.php');
+
 ?>
 
 <div id="account">
