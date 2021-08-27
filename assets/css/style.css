@@ -98,13 +98,12 @@ body {
 .navbar-inverse {
 background-color: #FFF;
 border-color: rgba(155, 153, 153, 0.23);
-
 }
 
 .navbar {
     min-height: 90px;
     margin-bottom: 0px;
-   
+   position: relative;
 }
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
     border-color:transparent;
