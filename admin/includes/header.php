@@ -24,8 +24,8 @@
         <div class="row ">
             <div class="col-md-12">
                 <div class="navbar-collapse collapse ">
-                    <ul id="menu-top" class="nav navbar-nav navbar-right">
-                        <li><a href="dashboard.php" class="menu-top-active">DASHBOARD</a></li>
+                    <ul id="menu-top" class="nav navbar-nav navbar-right" style="display: flex; list-style: none;">
+                        <li><a href="dashboard.php">DASHBOARD</a></li>
 
                         <li>
                             <div class="dropdown">
