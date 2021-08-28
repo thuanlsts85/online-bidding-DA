@@ -58,10 +58,17 @@
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
 
-                            <li><a href="adminLogin.php">Admin Login</a></li>
-                            <li><a href="signup.php">User Signup</a></li>
-                            <li><a href="index.php">User Login</a></li>
+                            <li><a href="signup.php">Signup</a></li>
 
+                            <li>
+                                <div class="dropdown">
+                                    <a href="#" class="dropbtn">Login</a>
+                                    <div class="dropdown-content">
+                                        <a href="adminLogin.php">Admin Login</a>
+                                        <a href="index.php">User Login</a>
+                                    </div>
+                                </div>
+                            </li>
 
                         </ul>
                     </div>

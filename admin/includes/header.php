@@ -8,7 +8,7 @@
             </button>
             <a class="navbar-brand">
 
-                <img src="assets/img/logo.png" />
+                <img src="../../assets/img/logo.jpg" style="width:120px; height:120px" />
             </a>
 
         </div>
@@ -28,31 +28,37 @@
                         <li><a href="dashboard.php" class="menu-top-active">DASHBOARD</a></li>
 
                         <li>
-                            <a href="#" class="dropdown-toggle" id="ddlmenuItem" data-toggle="dropdown"> Categories <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="ddlmenuItem">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Add Category</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Manage Categories</a></li>
-                            </ul>
-                        </li>
-                        
-                        <li>
-                            <a href="#" class="dropdown-toggle" id="ddlmenuItem" data-toggle="dropdown"> Products <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="ddlmenuItem">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Add Product</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Manage Products</a></li>
-                            </ul>
+                            <div class="dropdown">
+                                <a href="#" class="dropbtn">Categories</a>
+                                <div class="dropdown-content">
+                                    <a href="#">Add Category</a>
+                                    <a href="#">Manage Categories</a>
+                                </div>
+                            </div>
                         </li>
 
                         <li>
-                            <a href="#" class="dropdown-toggle" id="ddlmenuItem" data-toggle="dropdown"> Bidding Products <i class="fa fa-angle-down"></i></a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="ddlmenuItem">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Set Bidding</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Manage Bidded Products</a></li>
-                            </ul>
+                            <div class="dropdown">
+                                <a href="#" class="dropbtn">Products</a>
+                                <div class="dropdown-content">
+                                    <a href="#">Add Product</a>
+                                    <a href="#">Manage Products</a>
+                                </div>
+                            </div>
                         </li>
+
+                        <li>
+                            <div class="dropdown">
+                                <a href="#" class="dropbtn">Bidding Products</a>
+                                <div class="dropdown-content">
+                                    <a href="#">Set Bidding</a>
+                                    <a href="#">Manage Bidded Products</a>
+                                </div>
+                            </div>
+                        </li>
+
                         <li><a href="#">Customers</a></li>
 
-                        <li><a href="../../change-password.php">Change Password</a></li>
                     </ul>
                 </div>
             </div>
