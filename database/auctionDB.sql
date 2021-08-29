@@ -16,6 +16,7 @@ CREATE TABLE `product` (
 CREATE TABLE `category` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL UNIQUE,
+  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   primary key(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

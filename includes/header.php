@@ -7,7 +7,6 @@
                 <span class="icon-bar"></span>
             </button>
             <div class="navbar-brand">
-
                 <img src="assets/img/logo.jpg" style="width:120px; height:120px" />
             </div>
 
@@ -15,7 +14,7 @@
         <?php if ($_SESSION['login']) {
         ?>
             <div class="right-div">
-                <a href="logout.php" class="btn btn-danger pull-right">LOG ME OUT</a>
+                <a href="logout.php" class="btn btn-danger pull-right">LOGOUT</a>
             </div>
         <?php } ?>
     </div>

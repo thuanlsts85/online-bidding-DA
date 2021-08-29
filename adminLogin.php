@@ -45,10 +45,6 @@ if($result === false){
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Online Auction Management System</title>
-    <!-- BOOTSTRAP CORE STYLE  -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <!-- FONT AWESOME STYLE  -->
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE  -->
     <link href="assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT -->
@@ -104,11 +100,6 @@ if($result === false){
      <!-- CONTENT-WRAPPER SECTION END-->
  <?php include('includes/footer.php');?>
       <!-- FOOTER SECTION END-->
-    <script src="assets/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
-    <script src="assets/js/bootstrap.js"></script>
-      <!-- CUSTOM SCRIPTS  -->
-    <script src="assets/js/custom.js"></script>
 </script>
 </body>
 </html>

@@ -6,18 +6,18 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand">
 
+            <a class="navbar-brand">
                 <img src="../../assets/img/logo.jpg" style="width:120px; height:120px" />
             </a>
-
         </div>
 
         <div class="right-div">
-            <a href="../../logout.php" class="btn btn-danger pull-right">LOG ME OUT</a>
+            <a href="../../logout.php" class="btn btn-danger pull-right">LOGOUT</a>
         </div>
     </div>
 </div>
+
 <!-- LOGO HEADER END-->
 <section class="menu-section">
     <div class="container">
@@ -25,26 +25,14 @@
             <div class="col-md-12">
                 <div class="navbar-collapse collapse ">
                     <ul id="menu-top" class="nav navbar-nav navbar-right" style="display: flex; list-style: none;">
-                        <li><a href="dashboard.php">DASHBOARD</a></li>
+                        <li><a href="/admin/dashboard.php">DASHBOARD</a></li>
 
                         <li>
-                            <div class="dropdown">
-                                <a href="#" class="dropbtn">Categories</a>
-                                <div class="dropdown-content">
-                                    <a href="#">Add Category</a>
-                                    <a href="#">Manage Categories</a>
-                                </div>
-                            </div>
+                            <a href="/admin/category/category.php">Categories</a>
                         </li>
 
                         <li>
-                            <div class="dropdown">
-                                <a href="#" class="dropbtn">Products</a>
-                                <div class="dropdown-content">
-                                    <a href="#">Add Product</a>
-                                    <a href="#">Manage Products</a>
-                                </div>
-                            </div>
+                            <a href="#" class="dropbtn">Products</a>
                         </li>
 
                         <li>
@@ -57,7 +45,9 @@
                             </div>
                         </li>
 
-                        <li><a href="#">Customers</a></li>
+                        <li>
+                            <a href="#">Customers</a>
+                        </li>
 
                     </ul>
                 </div>

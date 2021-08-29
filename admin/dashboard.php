@@ -17,10 +17,6 @@ else{?>
     <meta name="author" content="" />
 
     <title>Online Auction Management System | Admin Dash Board</title>
-    <!-- BOOTSTRAP CORE STYLE  -->
-    <link href="../assets/css/bootstrap.css" rel="stylesheet" />
-    <!-- FONT AWESOME STYLE  -->
-    <link href="../assets/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE  -->
     <link href="../assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT -->

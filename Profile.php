@@ -45,10 +45,6 @@ if (strlen($_SESSION['login']) == 0) {
     <meta name="author" content="" />
 
     <title>Online Aunction Management System | Customer Profile</title>
-    <!-- BOOTSTRAP CORE STYLE  -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <!-- FONT AWESOME STYLE  -->
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
     <!-- CUSTOM STYLE  -->
     <link href="assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT -->
@@ -86,7 +82,7 @@ if (strlen($_SESSION['login']) == 0) {
                   $query->execute();
 
                   $results = $query->fetchAll(PDO::FETCH_OBJ);
-                  $cnt = 1;
+
                   if ($query->rowCount() > 0) {
                     foreach ($results as $result) {
                   ?>
@@ -170,11 +166,6 @@ if (strlen($_SESSION['login']) == 0) {
     </div>
     <!-- CONTENT-WRAPPER SECTION END-->
     <?php include('includes/footer.php'); ?>
-    <script src="assets/js/jquery-1.10.2.js"></script>
-    <!-- BOOTSTRAP SCRIPTS  -->
-    <script src="assets/js/bootstrap.js"></script>
-    <!-- CUSTOM SCRIPTS  -->
-    <script src="assets/js/custom.js"></script>
   </body>
 
   </html>
