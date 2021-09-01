@@ -6,7 +6,7 @@ CREATE TABLE `product` (
   `end_time` datetime NOT NULL,
   `start_price` float NOT NULL,
   `img` text NOT NULL,
-  `status` tinyint DEFAULT NULL, -- (1=active, 0=end)
+  `status` tinyint NOT NULL DEFAULT 1,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   primary key(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -61,13 +61,12 @@ CREATE TABLE `branch` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-CREATE TABLE `bid` (
+CREATE TABLE `auction` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `customer_id` VARCHAR(30) NOT NULL,
     `product_id` INT NOT NULL,
     `current_price` FLOAT NOT NULL,
-    `status` TINYINT NOT NULL DEFAULT 1 COMMENT '1=soon,2=bidding,3=finished',
-    `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP () ON UPDATE CURRENT_TIMESTAMP (),
+    `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP (),
 	PRIMARY KEY (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
 
