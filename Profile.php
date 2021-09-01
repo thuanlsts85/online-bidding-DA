@@ -6,31 +6,38 @@ if (strlen($_SESSION['login']) == 0) {
   header('location:index.php');
 } else {
   if (isset($_POST['update'])) {
+    // store image location
+    $target = "assets/img/" . basename($_FILES['img']['name']);
+
+    // Get data from the input form
+
     $id = $_SESSION['id'];
     $Fname = $_POST['Fname'];
     $Lname = $_POST['Lname'];
     $phone = $_POST['phone'];
     $balance = $_POST['balance'];
     $address = $_POST['address'];
-    $img = $_POST['img'];
+    $img = $_FILES['img']['name'];
 
-      $sql = "UPDATE customer set Fname= :Fname, Lname= :Lname, phone= :phone, balance= :balance, address= :address, img= :img WHERE id= :id";
-      $query = $pdo->prepare($sql);
+    $sql = "UPDATE customer set Fname= :Fname, Lname= :Lname, phone= :phone, balance= :balance, address= :address, img= :img WHERE id= :id";
+    $query = $pdo->prepare($sql);
 
-      $query->bindParam(':id', $id, PDO::PARAM_STR);
-      $query->bindParam(':Fname', $Fname, PDO::PARAM_STR);
-      $query->bindParam(':Lname', $Lname, PDO::PARAM_STR);
-      $query->bindParam(':phone', $phone, PDO::PARAM_STR);
-      $query->bindParam(':balance', $balance, PDO::PARAM_INT);
-      $query->bindParam(':address', $address, PDO::PARAM_STR);
-      $query->bindParam(':img', $img, PDO::PARAM_STR);
+    $query->bindParam(':id', $id, PDO::PARAM_STR);
+    $query->bindParam(':Fname', $Fname, PDO::PARAM_STR);
+    $query->bindParam(':Lname', $Lname, PDO::PARAM_STR);
+    $query->bindParam(':phone', $phone, PDO::PARAM_STR);
+    $query->bindParam(':balance', $balance, PDO::PARAM_INT);
+    $query->bindParam(':address', $address, PDO::PARAM_STR);
+    $query->bindParam(':img', $img, PDO::PARAM_STR);
 
-      if ($query->execute()) {
-        echo '<script>alert("Your profile has been updated")</script>';
-        echo "<script type='text/javascript'> document.location ='profile.php'; </script>";
-      } else {
-        echo '<script>alert("An error occurred")</script>';
-      }
+    $query->execute();
+
+    if (move_uploaded_file($_FILES['img']['tmp_name'], $target)) {
+      echo '<script>alert("Your profile has been updated")</script>';
+      echo "<script type='text/javascript'> document.location ='profile.php'; </script>";
+    } else {
+      echo '<script>alert("An error occurred")</script>';
+    }
   }
 
 ?>
@@ -70,7 +77,7 @@ if (strlen($_SESSION['login']) == 0) {
           <div class="col-md-9 col-md-offset-1">
             <div class="panel panel-danger">
               <div class="panel-body">
-                <form name="signup" method="post">
+                <form name="signup" method="post" enctype="multipart/form-data">
                   <?php
                   $id = $_SESSION['id'];
 
@@ -86,6 +93,9 @@ if (strlen($_SESSION['login']) == 0) {
                   if ($query->rowCount() > 0) {
                     foreach ($results as $result) {
                   ?>
+                      <div class="form-group">
+                        <?php echo "<img src='assets/img/".htmlentities($result->img)."' style='max-height: 200px; max-width: 200px'> " ?>
+                      </div>
 
                       <div class="form-group">
                         <label>Customer ID : </label>
@@ -119,7 +129,7 @@ if (strlen($_SESSION['login']) == 0) {
 
                       <div class="form-group">
                         <label>Email : </label>
-                        <span>  <?php echo htmlentities($result->email); ?>  </span>
+                        <span> <?php echo htmlentities($result->email); ?> </span>
                       </div>
 
                       <div class="form-group">
@@ -129,17 +139,18 @@ if (strlen($_SESSION['login']) == 0) {
 
                       <div class="form-group">
                         <label>Country : </label>
-                        <span>  <?php echo htmlentities($result->country); ?>  </span>
+                        <span> <?php echo htmlentities($result->country); ?> </span>
                       </div>
 
                       <div class="form-group">
                         <label>City : </label>
                         <?php if ($result->branch_id == 1) { ?>
                           <span>Ho Chi Minh</span>
-                        <?php } 
-                         if ($result->branch_id == 2) { ?>
+                        <?php }
+                        if ($result->branch_id == 2) { ?>
                           <span>Da Nang</span>
-                        <?php }if ($result->branch_id == 3) { ?>
+                        <?php }
+                        if ($result->branch_id == 3) { ?>
                           <span>Ha Noi</span>
                         <?php } ?>
                       </div>
@@ -150,10 +161,11 @@ if (strlen($_SESSION['login']) == 0) {
                       </div>
 
                       <div class="form-group">
-                        <label>Image profile link</label>
-                        <input class="form-control" type="text" name="img" value="<?php echo htmlentities($result->img); ?>" autocomplete="off" required />
+                        <label>New Image profile</label>
+                        <input class="form-control" type="file" name="img" value="<?php echo htmlentities($result->img); ?>" autocomplete="off" required />
                       </div>
-                  <?php }} ?>
+                  <?php }
+                  } ?>
 
                   <button type="submit" name="update" class="btn btn-primary" id="submit">Update Now </button>
 

@@ -3,13 +3,12 @@ session_start();
 include('includes/data_connect.php');
 error_reporting(0);
 if (isset($_POST['signup'])) {
-    //code for captach verification
-    // if ($_POST["vercode"] != $_SESSION["vercode"] OR $_SESSION["vercode"]=='')  {
-    //         echo "<script>alert('Incorrect verification code');</script>" ;
-    //     } 
-    //         else {    
+    
     try {
+        // store image location
+        $target = "assets/img/".basename($_FILES['img']['name']);
 
+        // Get data from the input form
         $id = $_POST['id'];;
         $Fname = $_POST['Fname'];
         $Lname = $_POST['Lname'];
@@ -18,13 +17,15 @@ if (isset($_POST['signup'])) {
         $country = $_POST['country'];
         $branch_id = $_POST['branch_id'];
         $address = $_POST['address'];
-        $img = $_POST['img'];
+        $img = $_FILES['img']['name'];
         $email = $_POST['email'];
         $password = md5($_POST['password']);
         $status = 1;
+
         $sql = "INSERT INTO customer (`id`, `Fname`, `Lname`, `password`, `email`, `phone`, `balance`, `country`, `branch_id`, `address`, `img`, `status`) 
                         VALUES(:id,:Fname,:Lname,:password,:email,:phone,:balance,:country,:branch_id,:address,:img,:status)";
         $query = $pdo->prepare($sql);
+
         $query->bindParam(':id', $id, PDO::PARAM_STR);
         $query->bindParam(':Fname', $Fname, PDO::PARAM_STR);
         $query->bindParam(':Lname', $Lname, PDO::PARAM_STR);
@@ -37,10 +38,12 @@ if (isset($_POST['signup'])) {
         $query->bindParam(':address', $address, PDO::PARAM_STR);
         $query->bindParam(':img', $img, PDO::PARAM_STR);
         $query->bindParam(':status', $status, PDO::PARAM_INT);
-        if ($query->execute()) {
+
+        $query->execute();
+
+        if (move_uploaded_file($_FILES['img']['tmp_name'],$target)) {
             echo '<script>alert("User account created.")</script>';
-            //redirect to another page
-            // echo '<script>window.location.replace("index.php")</script>';
+            
         } else {
             echo '<script>alert("An error occurred")</script>';
         }
@@ -112,7 +115,7 @@ if (isset($_POST['signup'])) {
                             SINGUP FORM
                         </div>
                         <div class="panel-body">
-                            <form name="signup" method="post" onSubmit="return valid();">
+                            <form name="signup" method="post" enctype="multipart/form-data" onSubmit="return valid();">
 
                                 <div class="form-group">
                                     <label>Identity number :</label>
@@ -167,8 +170,8 @@ if (isset($_POST['signup'])) {
                                     </div>
 
                                     <div class="form-group">
-                                        <label>Profile Image Link</label>
-                                        <input class="form-control" type="text" name="img" autocomplete="off" required />
+                                        <label>Profile Image</label>
+                                        <input class="form-control" type="file" name="img" autocomplete="off" required />
                                     </div>
 
                                     <div class="form-group">

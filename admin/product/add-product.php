@@ -7,13 +7,17 @@ if (strlen($_SESSION['alogin']) == 0) {
 } else {
 
     if (isset($_POST['create'])) {
+        // store image location
+        $target = "../assets/img/".basename($_FILES['img']['name']);
+
+        // Get data from the input form
 
         $name = $_POST['name'];
         $category_id = $_POST['category_id'];
         $description = $_POST['description'];
         $start_price = $_POST['start_price'];
         $end_time = $_POST['end_time'];
-        $img = $_POST['img'];
+        $img = $_FILES['img']['name'];
 
         $sql = "INSERT INTO product(`name`,`category_id`,`description`,`start_price`,`end_time`,`img`) VALUES(:name,:category_id,:description,:start_price,:end_time,:img)";
         $query = $pdo->prepare($sql);
@@ -26,8 +30,8 @@ if (strlen($_SESSION['alogin']) == 0) {
         $query->bindParam(':img', $img, PDO::PARAM_STR);
 
         $query->execute();
-        $lastInsertId = $pdo->lastInsertId();
-        if ($lastInsertId) {
+        
+        if (move_uploaded_file($_FILES['img']['tmp_name'],$target)) {
             $_SESSION['addmsg'] = "Product added successfully";
             header('location:product.php');
         } else {
