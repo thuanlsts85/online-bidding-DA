@@ -32,7 +32,7 @@
                         </li>
 
                         <li>
-                            <a href="#" class="dropbtn">Products</a>
+                            <a href="/admin/product/product.php">Products</a>
                         </li>
 
                         <li>

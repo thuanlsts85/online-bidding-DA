@@ -3,10 +3,10 @@ CREATE TABLE `product` (
   `category_id` int NOT NULL ,
   `name` varchar(30) NOT NULL,
   `description` text NOT NULL,
-  `start_time` datetime NOT NULL,
   `end_time` datetime NOT NULL,
   `start_price` float NOT NULL,
   `img` text NOT NULL,
+  `status` tinyint DEFAULT NULL, -- (1=active, 0=end)
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   primary key(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

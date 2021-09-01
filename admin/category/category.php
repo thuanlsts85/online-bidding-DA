@@ -29,8 +29,6 @@ if (strlen($_SESSION['alogin']) == 0) {
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Online Auction Management System | Manage Categories</title>
-        <!-- DATATABLE STYLE  -->
-        <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
         <!-- CUSTOM STYLE  -->
         <link href="../../assets/css/style.css" rel="stylesheet" />
         <!-- GOOGLE FONT -->
@@ -98,11 +96,9 @@ if (strlen($_SESSION['alogin']) == 0) {
                                 </div>
                             </div>
                         <?php } ?>
-
                     </div>
-
-
                 </div>
+
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Advanced Tables -->
@@ -110,7 +106,8 @@ if (strlen($_SESSION['alogin']) == 0) {
                             <div class="panel-heading">
                                 Categories Listing
                             </div>
-                            <a href="add-category.php"><button>Add Category</button></a>
+                            <!-- <a href="add-category.php"><button>Add Category</button></a> -->
+
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -129,11 +126,10 @@ if (strlen($_SESSION['alogin']) == 0) {
                                             $results = $query->fetchAll(PDO::FETCH_OBJ);
                                             if ($query->rowCount() > 0) {
                                                 foreach ($results as $result) {
-                                            ?>                        
-
+                                            ?>
                                                     <tr class="odd gradeX">
                                                         <td class="center"><?php echo htmlentities($result->id); ?></td>
-                                                        <td class="center"><?php echo htmlentities($result->name); ?></td>                                              
+                                                        <td class="center"><?php echo htmlentities($result->name); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->date_created); ?></td>
                                                         <td class="center">
                                                             <a href="edit-category.php?id=<?php echo htmlentities($result->id); ?>"><button class="btn btn-primary"><i class="fa fa-edit "></i> Edit</button>
@@ -145,6 +141,16 @@ if (strlen($_SESSION['alogin']) == 0) {
                                             } ?>
                                         </tbody>
                                     </table>
+
+                                    <!-- Add Category -->
+                                    <form role="form" method="post" action="add-category.php">
+                                        <div class="form-group">
+                                            <label><b>New Category</b></label>
+                                            <input class="form-control" type="text" name="name" autocomplete="off" require />
+                                            <button type="submit" name="create" class="btn btn-info">Create</button>
+                                        </div>
+                                    </form>
+                                    
                                 </div>
 
                             </div>
@@ -152,9 +158,6 @@ if (strlen($_SESSION['alogin']) == 0) {
                         <!--End Advanced Tables -->
                     </div>
                 </div>
-
-
-
             </div>
         </div>
 
