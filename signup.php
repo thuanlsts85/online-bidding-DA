@@ -3,10 +3,10 @@ session_start();
 include('includes/data_connect.php');
 error_reporting(0);
 if (isset($_POST['signup'])) {
-    
+
     try {
         // store image location
-        $target = "assets/img/".basename($_FILES['img']['name']);
+        $target = "assets/img/" . basename($_FILES['img']['name']);
 
         // Get data from the input form
         $id = $_POST['id'];;
@@ -41,7 +41,7 @@ if (isset($_POST['signup'])) {
 
         $query->execute();
 
-        if (move_uploaded_file($_FILES['img']['tmp_name'],$target)) {
+        if (move_uploaded_file($_FILES['img']['tmp_name'], $target)) {
             echo '<script>alert("User account created.")</script>';
             echo "<script type='text/javascript'> document.location ='index.php'; </script>";
         } else {
@@ -62,7 +62,7 @@ if (isset($_POST['signup'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-   
+
     <title>Online Auction Management System | Customer Signup</title>
     <!-- CUSTOM STYLE  -->
     <link href="assets/css/style.css" rel="stylesheet" />
@@ -184,10 +184,6 @@ if (isset($_POST['signup'])) {
                                         <input class="form-control" type="password" name="confirmpassword" autocomplete="off" required />
                                     </div>
 
-                                    <!-- <div class="form-group">
-<label>Verification code : </label>
-<input type="text"  name="vercode" maxlength="5" autocomplete="off" required style="width: 150px; height: 25px;" />&nbsp;<img src="captcha.php">
-</div>                                 -->
                                     <button type="submit" name="signup" class="btn btn-danger" id="submit">Register Now </button>
 
                             </form>

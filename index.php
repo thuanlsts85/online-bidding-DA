@@ -7,13 +7,6 @@ if ($_SESSION['login'] != '') {
 }
 if (isset($_POST['login'])) {
 
-  //code for captach verification
-  // if ($_POST["vercode"] != $_SESSION["vercode"] OR $_SESSION["vercode"]=='')  {
-  //         echo "<script>alert('Incorrect verification code');</script>" ;
-  //     } 
-  //         else {
-
-
   //ensure fields are not empty
   $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
   $password = !empty(md5($_POST['password'])) ? trim(md5($_POST['password'])) : null;
@@ -92,11 +85,6 @@ if (isset($_POST['login'])) {
                   <input class="form-control" type="password" name="password" required autocomplete="off" />
                   <p class="help-block"><a href="change-password.php">Forgot Password</a></p>
                 </div>
-
-                <!-- <div class="form-group">
-<label>Verification code : </label>
-<input type="text" class="form-control1"  name="vercode" maxlength="5" autocomplete="off" required  style="height:25px;" />&nbsp;<img src="captcha.php">
-</div>  -->
 
                 <button type="submit" name="login" class="btn btn-info">LOGIN </button> | <a href="signup.php">Not Register Yet</a>
               </form>

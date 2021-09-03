@@ -3,11 +3,6 @@ session_start();
 error_reporting(0);
 include('includes/data_connect.php');
 if (isset($_POST['change'])) {
-    //code for captach verification
-    // if ($_POST["vercode"] != $_SESSION["vercode"] OR $_SESSION["vercode"]=='')  {
-    //         echo "<script>alert('Incorrect verification code');</script>" ;
-    //     } 
-    //         else {
 
     $email = $_POST['email'];
     $phone = $_POST['phone'];
@@ -117,11 +112,6 @@ if (isset($_POST['change'])) {
                                     <label>ConfirmPassword</label>
                                     <input class="form-control" type="password" name="confirmpassword" required autocomplete="off" />
                                 </div>
-
-                                <!-- <div class="form-group">
-<label>Verification code : </label>
-<input type="text" class="form-control1"  name="vercode" maxlength="5" autocomplete="off" required  style="height:25px;" />&nbsp;<img src="captcha.php">
-</div>  -->
 
                                 <button type="submit" name="change" class="btn btn-info">Change Password</button> | <a href="index.php">Login</a>
                             </form>
