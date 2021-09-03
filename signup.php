@@ -43,7 +43,7 @@ if (isset($_POST['signup'])) {
 
         if (move_uploaded_file($_FILES['img']['tmp_name'],$target)) {
             echo '<script>alert("User account created.")</script>';
-            
+            echo "<script type='text/javascript'> document.location ='index.php'; </script>";
         } else {
             echo '<script>alert("An error occurred")</script>';
         }

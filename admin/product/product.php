@@ -153,7 +153,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                         <td class="center"><?php echo htmlentities($result->date_created); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->status); ?></td>
                                                         <td class="center">
-                                                            <a href="product.php?del=<?php echo htmlentities($result->product_id); ?>" onclick="return confirm('Are you sure you want to delete?');"" >  <button class=" btn btn-danger"><i class="fa fa-pencil"></i> Delete</button>
+                                                            <a href="product.php?del=<?php echo htmlentities($result->product_id); ?>" onclick="return confirm('Are you sure you want to delete?');"" >  <button class=" btn btn-danger">Delete</button>
                                                         </td>
                                                     </tr>
                                             <?php
@@ -165,6 +165,11 @@ if (strlen($_SESSION['alogin']) == 0) {
                                     <!-- Add Product -->
                                     <form role="form" method="post" action="add-product.php" enctype="multipart/form-data">
                                         <label><b>Add New Product</b></label>
+
+                                        <div class="form-group">
+                                            <label>Product ID</label>
+                                            <input class="form-control" type="text" name="id" autocomplete="off" require />
+                                        </div>
 
                                         <div class="form-group">
                                             <label>Product Name</label>

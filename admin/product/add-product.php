@@ -11,7 +11,7 @@ if (strlen($_SESSION['alogin']) == 0) {
         $target = "../assets/img/".basename($_FILES['img']['name']);
 
         // Get data from the input form
-
+        $id = $_POST['id'];
         $name = $_POST['name'];
         $category_id = $_POST['category_id'];
         $description = $_POST['description'];
@@ -19,9 +19,10 @@ if (strlen($_SESSION['alogin']) == 0) {
         $end_time = $_POST['end_time'];
         $img = $_FILES['img']['name'];
 
-        $sql = "INSERT INTO product(`name`,`category_id`,`description`,`start_price`,`end_time`,`img`) VALUES(:name,:category_id,:description,:start_price,:end_time,:img)";
+        $sql = "INSERT INTO product(`id`,`name`,`category_id`,`description`,`start_price`,`end_time`,`img`) VALUES(:id,:name,:category_id,:description,:start_price,:end_time,:img)";
         $query = $pdo->prepare($sql);
 
+        $query->bindParam(':id', $id, PDO::PARAM_STR);
         $query->bindParam(':name', $name, PDO::PARAM_STR);
         $query->bindParam(':category_id', $category_id, PDO::PARAM_INT);
         $query->bindParam(':description', $description, PDO::PARAM_STR);

@@ -5,21 +5,59 @@ error_reporting(0);
 if (strlen($_SESSION['login']) == 0) {
   header('location:index.php');
 } else {
+
+  //Set new img and delete old img
+  if (isset($_POST['update_img'])) {
+    // Get data from the update img form
+    $id = $_SESSION['id'];
+    // get old img to delete on the folder
+    $sql1 = "SELECT * FROM customer WHERE id= :id";
+    $query1 = $pdo->prepare($sql1);
+
+    $query1->bindParam(':id', $id, PDO::PARAM_STR);
+
+    $query1->execute();
+
+    $fetch_record = $query1->fetch(PDO::FETCH_ASSOC);
+    $old_img = $fetch_record['img'];
+    $delete_path = "assets/img/" . $old_img;
+
+    //if found image location to delete, delete others data
+    if (unlink($delete_path)) {
+      // store image location
+      $target = "assets/img/" . basename($_FILES['img']['name']);
+
+      $img = $_FILES['img']['name'];
+
+      $sql = "UPDATE customer SET img= :img WHERE id= :id";
+      $query = $pdo->prepare($sql);
+
+      $query->bindParam(':id', $id, PDO::PARAM_STR);
+      $query->bindParam(':img', $img, PDO::PARAM_STR);
+
+      $query->execute();
+
+      if (move_uploaded_file($_FILES['img']['tmp_name'], $target)) {
+        echo '<script>alert("Your image profile has been updated")</script>';
+        echo "<script type='text/javascript'> document.location ='profile.php'; </script>";
+      } else {
+        echo '<script>alert("An error occurred")</script>';
+      }
+    }
+  }
+
+  //Set update information without img
   if (isset($_POST['update'])) {
-    // store image location
-    $target = "assets/img/" . basename($_FILES['img']['name']);
-
+    
     // Get data from the input form
-
     $id = $_SESSION['id'];
     $Fname = $_POST['Fname'];
     $Lname = $_POST['Lname'];
     $phone = $_POST['phone'];
     $balance = $_POST['balance'];
     $address = $_POST['address'];
-    $img = $_FILES['img']['name'];
 
-    $sql = "UPDATE customer set Fname= :Fname, Lname= :Lname, phone= :phone, balance= :balance, address= :address, img= :img WHERE id= :id";
+    $sql = "UPDATE customer set Fname= :Fname, Lname= :Lname, phone= :phone, balance= :balance, address= :address WHERE id= :id";
     $query = $pdo->prepare($sql);
 
     $query->bindParam(':id', $id, PDO::PARAM_STR);
@@ -28,11 +66,8 @@ if (strlen($_SESSION['login']) == 0) {
     $query->bindParam(':phone', $phone, PDO::PARAM_STR);
     $query->bindParam(':balance', $balance, PDO::PARAM_INT);
     $query->bindParam(':address', $address, PDO::PARAM_STR);
-    $query->bindParam(':img', $img, PDO::PARAM_STR);
 
-    $query->execute();
-
-    if (move_uploaded_file($_FILES['img']['tmp_name'], $target)) {
+    if ($query->execute()) {
       echo '<script>alert("Your profile has been updated")</script>';
       echo "<script type='text/javascript'> document.location ='profile.php'; </script>";
     } else {
@@ -63,17 +98,16 @@ if (strlen($_SESSION['login']) == 0) {
     <!------MENU SECTION START-->
     <?php include('includes/header.php'); ?>
     <!-- MENU SECTION END-->
+
     <div class="content-wrapper">
       <div class="container">
         <div class="row pad-botm">
           <div class="col-md-12">
             <h4 class="header-line">My Profile</h4>
-
           </div>
-
         </div>
-        <div class="row">
 
+        <div class="row">
           <div class="col-md-9 col-md-offset-1">
             <div class="panel panel-danger">
               <div class="panel-body">
@@ -94,7 +128,7 @@ if (strlen($_SESSION['login']) == 0) {
                     foreach ($results as $result) {
                   ?>
                       <div class="form-group">
-                        <?php echo "<img src='assets/img/".htmlentities($result->img)."' style='max-height: 200px; max-width: 200px'> " ?>
+                        <?php echo "<img src='assets/img/" . htmlentities($result->img) . "' style='max-height: 200px; max-width: 200px'> " ?>
                       </div>
 
                       <div class="form-group">
@@ -110,7 +144,6 @@ if (strlen($_SESSION['login']) == 0) {
                           <span style="color: red">Blocked</span>
                         <?php } ?>
                       </div>
-
 
                       <div class="form-group">
                         <label>First Name</label>
@@ -159,17 +192,21 @@ if (strlen($_SESSION['login']) == 0) {
                         <label>Address</label>
                         <input class="form-control" type="text" name="address" value="<?php echo htmlentities($result->address); ?>" autocomplete="off" style="width: 300px;" required />
                       </div>
-
-                      <div class="form-group">
-                        <label>New Image profile</label>
-                        <input class="form-control" type="file" name="img" value="<?php echo htmlentities($result->img); ?>" autocomplete="off" required />
-                      </div>
                   <?php }
                   } ?>
 
                   <button type="submit" name="update" class="btn btn-primary" id="submit">Update Now </button>
 
+                  <!---------------Update Avatar---------------->
                 </form>
+                <form action="#" name="signup" method="post" enctype="multipart/form-data">
+                  <div class="form-group">
+                    <label>Update Image profile</label>
+                    <input class="form-control" type="file" name="img" value="<?php echo htmlentities($result->img); ?>" autocomplete="off" required />
+                    <button type="submit" name="update_img" class="btn btn-primary" id="submit">Update Now </button>
+                  </div>
+                </form>
+
               </div>
             </div>
           </div>
