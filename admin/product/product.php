@@ -35,6 +35,8 @@ if (strlen($_SESSION['alogin']) == 0) {
         }else{
             $_SESSION['error'] = "Unable to delete product";
         }
+        // delete data on mongodb
+        $delete_result = $collection->deleteMany(['_id'=>$id]);
     }
 ?>
 

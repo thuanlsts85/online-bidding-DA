@@ -2,10 +2,10 @@
 
 <?php
 // MongoDB connectionn
-// require_once ('../vendor/autoload.php');
+require_once ("vendor/autoload.php");
 
-// $client = new MongoDB\Client ('mongodb://localhost:27017');
-// $collection = $client->db_test->product;
+$client = new MongoDB\Client ('mongodb://localhost:27017');
+$collection = $client->aunction_db->product;
 
 // MySQL connection
 $host = 'localhost';
