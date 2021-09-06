@@ -176,59 +176,84 @@ if (strlen($_SESSION['login']) == 0) {
                                         </tbody>
                                     </table>
 
-                                    
+
                                 </div>
                             </div>
                             <!-- Add Product -->
                             <form role="form" method="post" action="add-product.php" enctype="multipart/form-data">
-                                        <label><b>Add New Product</b></label>
+                                <label><b>Add New Product</b></label>
 
-                                        <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input class="form-control" type="text" name="name" autocomplete="off" require />
-                                        </div>
+                                <div class="form-group">
+                                    <label>Product Name</label>
+                                    <input class="form-control" type="text" name="name" autocomplete="off" require />
+                                </div>
 
-                                        <div class="form-group">
-                                            <label>Category</label>
-                                            <select class="form-control" type="text" name="category_id" autocomplete="off" require>
-                                                <option value="">Select Category</option>
-                                                <?php
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select class="form-control" type="text" name="category_id" autocomplete="off" require>
+                                        <option value="">Select Category</option>
+                                        <?php
 
-                                                $sql = "SELECT * from  category ";
-                                                $query = $pdo->prepare($sql);
-                                                $query->execute();
-                                                $results = $query->fetchAll(PDO::FETCH_OBJ);
-                                                if ($query->rowCount() > 0) {
-                                                    foreach ($results as $result) {
-                                                ?>
-                                                        <option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->name); ?></option>
-                                                <?php }
-                                                } ?>
-                                            </select>
-                                        </div>
+                                        $sql = "SELECT * from  category ";
+                                        $query = $pdo->prepare($sql);
+                                        $query->execute();
+                                        $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                        if ($query->rowCount() > 0) {
+                                            foreach ($results as $result) {
+                                        ?>
+                                                <option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->name); ?></option>
+                                        <?php }
+                                        } ?>
+                                    </select>
+                                </div>
 
-                                        <div class="form-group">
-                                            <label>Description</label>
-                                            <input class="form-control" type="text" name="description" autocomplete="off" require />
-                                        </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <input class="form-control" type="text" name="description" autocomplete="off" require />
+                                </div>
 
-                                        <div class="form-group">
-                                            <label>Start Price</label>
-                                            <input class="form-control" type="number" name="start_price" autocomplete="off" require />
-                                        </div>
+                                <div class="form-group">
+                                    <label>Start Price</label>
+                                    <input class="form-control" type="number" name="start_price" autocomplete="off" require />
+                                </div>
 
-                                        <div class="form-group">
-                                            <label>Close Time</label>
-                                            <input class="form-control" type="datetime-local" name="end_time" autocomplete="off" require />
-                                        </div>
+                                <div class="form-group">
+                                    <label>Close Time</label>
+                                    <input class="form-control" type="datetime-local" name="end_time" autocomplete="off" require />
+                                </div>
 
-                                        <div class="form-group">
-                                            <label>Image</label>
-                                            <input class="form-control" type="file" name="img" autocomplete="off" require />
-                                        </div>
-                                        <br>
-                                        <button type="submit" name="create" class="btn btn-info">Create</button>
-                                    </form>
+                                <div class="form-group">
+                                    <label>Image</label>
+                                    <input class="form-control" type="file" name="img" autocomplete="off" require />
+                                </div>
+                                <br>
+                                
+                                <label>Add Extra Features (Not Required)</label>
+
+                                <div class="form-group">
+                                    <label> Feature 1:
+                                        <input class="form-control" type="text" name="att1" autocomplete="off" placeholder="Name of feature" />
+                                    </label>
+                                    <input class="form-control" type="text" name="value1" autocomplete="off" placeholder="Value of this feature" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label> Feature 2:
+                                        <input class="form-control" type="text" name="att2" autocomplete="off" placeholder="Name of feature" />
+                                    </label>
+                                    <input class="form-control" type="text" name="value2" autocomplete="off" placeholder="Value of this feature" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label> Feature 3:
+                                        <input class="form-control" type="text" name="att3" autocomplete="off" placeholder="Name of feature" />
+                                    </label>
+                                    <input class="form-control" type="text" name="value3" autocomplete="off" placeholder="Value of this feature" />
+                                </div>
+
+                                <br>
+                                <button type="submit" name="create" class="btn btn-info">Create</button>
+                            </form>
                         </div>
                         <!--End Advanced Tables -->
                     </div>

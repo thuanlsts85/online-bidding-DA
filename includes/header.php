@@ -1,61 +1,78 @@
-        <div class="navbar-brand">
-            <img src="../assets/img/logo.jpg" style="width:120px; height:120px" />
-        </div>
+ <!-- LOGO HEADER END-->
+ <?php if ($_SESSION['login']) {
+    ?>
+     <section class="menu-section">
+         <div class="container">
+             <div class="row ">
 
-        <?php if ($_SESSION['login']) {
-        ?>
-            <div class="right-div">
-                <a href="../logout.php" class="btn btn-danger pull-right">LOGOUT</a>
-            </div>
-        <?php } ?>
- 
-<!-- LOGO HEADER END-->
-<?php if ($_SESSION['login']) {
-?>
-    <section class="menu-section">
-        <div class="container">
-            <div class="row ">
-                <div class="col-md-12">
-                    <div class="topnav">
+                 <div class="col-md-3">
+                     <div class="navbar-brand">
+                         <img src="../assets/img/logo.jpg" style="width:80px; height:80px" />
+                     </div>
+                 </div>
 
-                        <a href="../product/bidding.php">BIDDING</a>
+                 <div class="col-md-9">
+                     <div class="topnav">
 
-                        <a href="../product/product.php">SELL</a>
+                         <div class="right-div">
+                             <a href="../logout.php" class="btn btn-danger pull-right">LOGOUT</a>
+                         </div>
 
-                        <div class="dropdown">
-                            <a href="#" class="dropbtn">ACCOUNT</a>
-                            <div class="dropdown-content">
-                                <a href="../profile.php">My Profile</a>
-                                <a href="../change-password.php">Change Password</a>
-                            </div>
-                        </div>
+                         <div class="left-div">
+                             <a href="../product/bidding.php">BIDDING</a>
+                         </div>
 
-                    </div>
-                </div>
+                         <div class="left-div">
+                             <a href="../product/product.php">SELL</a>
+                         </div>
 
-            </div>
-        </div>
-    </section>
-<?php } else { ?>
-    <section class="menu-section">
-        <div class="container">
-            <div class="row ">
-                <div class="col-md-12">
-                    <div class="topnav">
-                            <a href="signup.php">SIGNUP</a>
+                         <div class="dropdown">
+                             <div class="left-div">
+                                 <a href="#" class="dropbtn">ACCOUNT</a>
+                             </div>
+                             <div class="dropdown-content">
+                                 <a href="../change-password.php">Change Password</a>
+                                 <a href="../profile.php">My Profile</a>
+                             </div>
+                         </div>
 
-                                <div class="dropdown">
-                                    <a href="#" class="dropbtn">LOGIN</a>
-                                    <div class="dropdown-content">
-                                        <a href="adminLogin.php">Admin Login</a>
-                                        <a href="index.php">User Login</a>
-                                    </div>
-                                </div>
-                    </div>
-                </div>
+                     </div>
+                 </div>
 
-            </div>
-        </div>
-    </section>
+             </div>
+         </div>
+     </section>
+ <?php } else { ?>
+     <section class="menu-section">
+         <div class="container">
+             <div class="row ">
 
-<?php } ?>
+                 <div class="col-md-3">
+                     <div class="navbar-brand">
+                         <img src="../assets/img/logo.jpg" style="width:80px; height:80px" />
+                     </div>
+                 </div>
+
+                 <div class="col-md-9">
+                     <div class="topnav">
+                         <div class="left-div">
+                             <a href="signup.php">SIGNUP</a>
+                         </div>
+
+                         <div class="dropdown">
+                             <div class="left-div">
+                                 <a href="#" class="dropbtn">LOGIN</a>
+                             </div>
+                             <div class="dropdown-content">
+                                 <a href="adminLogin.php">Admin Login</a>
+                                 <a href="index.php">User Login</a>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+
+             </div>
+         </div>
+     </section>
+
+ <?php } ?>

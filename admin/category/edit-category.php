@@ -31,6 +31,7 @@ if (strlen($_SESSION['alogin']) == 0) {
         <meta name="author" content="" />
         <title>Online Auction Management System | Edit Categories</title>
         <!-- CUSTOM STYLE  -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <link href="../../assets/css/style.css" rel="stylesheet" />
         <!-- GOOGLE FONT -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -80,10 +81,11 @@ if (strlen($_SESSION['alogin']) == 0) {
                                         </div>
                                 <?php }
                                 } ?>
+                                <br>
                                 <button type="submit" name="update" class="btn btn-info">Update </button>
 
                             </form>
-                            <a href="category.php"><button>Close</button></a>
+                            <a href="category.php"><button class="btn btn-info" style="background-color:red">Close</button></a>
                         </div>
                     </div>
                 </div>

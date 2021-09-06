@@ -20,9 +20,14 @@ if (strlen($_SESSION['login']) == 0) {
         $end_time = $_POST['end_time'];
         $img = $_FILES['img']['name'];
 
-        $att1 = $_POST['name'];
-        $value1 = $_POST['description'];
-        $attributes = [$att1 => $value1, '2SIM' => 'Yes', 'brand' => 'Nokia'];
+        $att1 = $_POST['att1'];
+        $att2 = $_POST['att2'];
+        $att3 = $_POST['att3'];
+        $value1 = $_POST['value1'];
+        $value2 = $_POST['value2'];
+        $value3 = $_POST['value3'];
+
+        $attributes = [$att1 => $value1, $att2 => $value2, $att3 => $value3];
 
 
         $sql = "INSERT INTO product(`name`,`uid`,`category_id`,`description`,`start_price`,`end_time`,`img`) VALUES(:name,:uid,:category_id,:description,:start_price,:end_time,:img)";

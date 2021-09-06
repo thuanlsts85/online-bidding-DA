@@ -30,6 +30,7 @@ if (strlen($_SESSION['alogin']) == 0) {
         <meta name="author" content="" />
         <title>Online Auction Management System | Manage Categories</title>
         <!-- CUSTOM STYLE  -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <link href="../../assets/css/style.css" rel="stylesheet" />
         <!-- GOOGLE FONT -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -147,6 +148,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                         <div class="form-group">
                                             <label><b>New Category</b></label>
                                             <input class="form-control" type="text" name="name" autocomplete="off" require />
+                                            <br>
                                             <button type="submit" name="create" class="btn btn-info">Create</button>
                                         </div>
                                     </form>

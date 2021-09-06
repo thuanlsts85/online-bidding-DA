@@ -90,6 +90,11 @@ body {
     padding: 20px;
 }
 
+.left-div {
+    float: left;
+    padding: 20px;
+}
+
 #menu-top a {
     color: #000;
     text-decoration: none;
@@ -155,6 +160,19 @@ body {
     height: 100%;
     object-fit: cover;
     vertical-align: middle;
+}
+
+.button a {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 100%;
+    transition-duration: 0.4s;
 }
 
 .img-comments {
