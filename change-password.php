@@ -50,6 +50,7 @@ if (isset($_POST['change'])) {
     <meta name="author" content="" />
     <title>Online Auction Management System | Password Recovery </title>
     <!-- CUSTOM STYLE  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link href="assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -89,7 +90,7 @@ if (isset($_POST['change'])) {
                             <form role="form" name="chngpwd" method="post" onSubmit="return valid();">
 
                                 <div class="form-group">
-                                    <label>Enter Your Identity Nunmber</label>
+                                    <label>Enter Your Identity Number</label>
                                     <input class="form-control" type="text" name="id" required autocomplete="off" />
                                 </div>
 
@@ -99,7 +100,7 @@ if (isset($_POST['change'])) {
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Enter Registered Phone Nunmber</label>
+                                    <label>Enter Registered Phone Number</label>
                                     <input class="form-control" type="text" name="phone" required autocomplete="off" />
                                 </div>
 
@@ -109,10 +110,10 @@ if (isset($_POST['change'])) {
                                 </div>
 
                                 <div class="form-group">
-                                    <label>ConfirmPassword</label>
+                                    <label>Confirm Password</label>
                                     <input class="form-control" type="password" name="confirmpassword" required autocomplete="off" />
                                 </div>
-
+                                <br>
                                 <button type="submit" name="change" class="btn btn-info">Change Password</button> | <a href="index.php">Login</a>
                             </form>
                         </div>
@@ -120,8 +121,6 @@ if (isset($_POST['change'])) {
                 </div>
             </div>
             <!---LOGIN PABNEL END-->
-
-
         </div>
     </div>
     <!-- CONTENT-WRAPPER SECTION END-->

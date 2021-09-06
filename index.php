@@ -48,6 +48,7 @@ if (isset($_POST['login'])) {
   <meta name="author" content="" />
   <title>Online Bidding System</title>
   <!-- CUSTOM STYLE  -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
   <link href="assets/css/style.css" rel="stylesheet" />
   <!-- GOOGLE FONT -->
   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -85,7 +86,7 @@ if (isset($_POST['login'])) {
                   <input class="form-control" type="password" name="password" required autocomplete="off" />
                   <p class="help-block"><a href="change-password.php">Forgot Password</a></p>
                 </div>
-
+                <br>
                 <button type="submit" name="login" class="btn btn-info">LOGIN </button> | <a href="signup.php">Not Register Yet</a>
               </form>
             </div>

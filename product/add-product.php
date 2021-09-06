@@ -10,8 +10,9 @@ if (strlen($_SESSION['login']) == 0) {
         // store image location
         $target = "../assets/img/product/" . basename($_FILES['img']['name']);
 
-        // Get data from the input form
         $uid = $_SESSION['id'];
+        
+        // Get data from the input form
         $name = $_POST['name'];
         $category_id = $_POST['category_id'];
         $description = $_POST['description'];

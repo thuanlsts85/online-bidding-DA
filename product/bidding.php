@@ -4,7 +4,7 @@ error_reporting(0);
 include('../includes/data_connect.php');
 if(strlen($_SESSION['login'])==0)
   { 
-header('location:index.php');
+header('location:../index.php');
 }
 else{?>
 <!DOCTYPE html>
@@ -16,6 +16,7 @@ else{?>
     <meta name="author" content="" />
     <title>Online Auction Management System | User Dash Board</title>
     <!-- CUSTOM STYLE  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link href="../assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -25,7 +26,7 @@ else{?>
       <!------MENU SECTION START-->
 <?php include('../includes/header.php');?>
 
-<h1>User Dashboard</h1>
+<h1>Current Bidding Product</h1>
 
      <!-- CONTENT-WRAPPER SECTION END-->
 <?php include('../includes/footer.php');?>

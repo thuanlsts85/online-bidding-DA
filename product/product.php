@@ -50,6 +50,7 @@ if (strlen($_SESSION['login']) == 0) {
         <meta name="author" content="" />
         <title>Online Auction Management System | Manage Products</title>
         <!-- CUSTOM STYLE  -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <link href="../assets/css/style.css" rel="stylesheet" />
         <!-- GOOGLE FONT -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -115,15 +116,13 @@ if (strlen($_SESSION['login']) == 0) {
                         <!-- Advanced Tables -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Products Listing of
-                                <p><?php
-                                    $uid = $_SESSION['id'];
-                                    echo $uid;
-                                    ?>
-                                </p>
+                                Products List of seller:
+                                <?php
+                                $uid = $_SESSION['id'];
+                                echo $uid;
+                                ?>
                             </div>
-                            <!-- <a href="add-category.php"><button>Add Category</button></a> -->
-                            <?php  ?>
+
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -224,12 +223,10 @@ if (strlen($_SESSION['login']) == 0) {
                                             <label>Image</label>
                                             <input class="form-control" type="file" name="img" autocomplete="off" require />
                                         </div>
-
+                                        <br>
                                         <button type="submit" name="create" class="btn btn-info">Create</button>
                                     </form>
-
                                 </div>
-
                             </div>
                         </div>
                         <!--End Advanced Tables -->
@@ -239,7 +236,7 @@ if (strlen($_SESSION['login']) == 0) {
         </div>
 
         <!-- CONTENT-WRAPPER SECTION END-->
-        <?php include('includes/footer.php'); ?>
+        <?php include('../includes/footer.php'); ?>
         <!-- FOOTER SECTION END-->
     </body>
 

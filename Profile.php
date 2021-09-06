@@ -88,6 +88,7 @@ if (strlen($_SESSION['login']) == 0) {
 
     <title>Online Aunction Management System | Customer Profile</title>
     <!-- CUSTOM STYLE  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <link href="assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -146,6 +147,11 @@ if (strlen($_SESSION['login']) == 0) {
                       </div>
 
                       <div class="form-group">
+                        <label>Email : </label>
+                        <span> <?php echo htmlentities($result->email); ?> </span>
+                      </div>
+
+                      <div class="form-group">
                         <label>First Name</label>
                         <input class="form-control" type="text" name="Fname" value="<?php echo htmlentities($result->Fname); ?>" autocomplete="off" required />
                       </div>
@@ -158,11 +164,6 @@ if (strlen($_SESSION['login']) == 0) {
                       <div class="form-group">
                         <label>Phone Number :</label>
                         <input class="form-control" type="text" name="phone" maxlength="10" value="<?php echo htmlentities($result->phone); ?>" autocomplete="off" required />
-                      </div>
-
-                      <div class="form-group">
-                        <label>Email : </label>
-                        <span> <?php echo htmlentities($result->email); ?> </span>
                       </div>
 
                       <div class="form-group">
@@ -190,19 +191,23 @@ if (strlen($_SESSION['login']) == 0) {
 
                       <div class="form-group">
                         <label>Address</label>
-                        <input class="form-control" type="text" name="address" value="<?php echo htmlentities($result->address); ?>" autocomplete="off" style="width: 300px;" required />
+                        <input class="form-control" type="text" name="address" value="<?php echo htmlentities($result->address); ?>" autocomplete="off" required />
                       </div>
+
+                      <br>
+                  <button type="submit" name="update" class="btn btn-primary" id="submit">Update Now </button>
                   <?php }
                   } ?>
-
-                  <button type="submit" name="update" class="btn btn-primary" id="submit">Update Now </button>
+                  </form>
+                  
 
                   <!---------------Update Avatar---------------->
-                </form>
+                <br>
                 <form action="#" name="signup" method="post" enctype="multipart/form-data">
                   <div class="form-group">
                     <label>Update Image profile</label>
                     <input class="form-control" type="file" name="img" value="<?php echo htmlentities($result->img); ?>" autocomplete="off" required />
+                    <br>
                     <button type="submit" name="update_img" class="btn btn-primary" id="submit">Update Now </button>
                   </div>
                 </form>
