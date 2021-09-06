@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/data_connect.php');
+include('../includes/data_connect.php');
 if(strlen($_SESSION['login'])==0)
   { 
 header('location:index.php');
@@ -16,19 +16,19 @@ else{?>
     <meta name="author" content="" />
     <title>Online Auction Management System | User Dash Board</title>
     <!-- CUSTOM STYLE  -->
-    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="../assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 
 </head>
 <body>
       <!------MENU SECTION START-->
-<?php include('includes/header.php');?>
+<?php include('../includes/header.php');?>
 
 <h1>User Dashboard</h1>
 
      <!-- CONTENT-WRAPPER SECTION END-->
-<?php include('includes/footer.php');?>
+<?php include('../includes/footer.php');?>
       <!-- FOOTER SECTION END-->
 </body>
 </html>

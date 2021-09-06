@@ -7,14 +7,14 @@
                 <span class="icon-bar"></span>
             </button>
             <div class="navbar-brand">
-                <img src="assets/img/logo.jpg" style="width:120px; height:120px" />
+                <img src="../assets/img/logo.jpg" style="width:120px; height:120px" />
             </div>
 
         </div>
         <?php if ($_SESSION['login']) {
         ?>
             <div class="right-div">
-                <a href="logout.php" class="btn btn-danger pull-right">LOGOUT</a>
+                <a href="../logout.php" class="btn btn-danger pull-right">LOGOUT</a>
             </div>
         <?php } ?>
     </div>
@@ -28,16 +28,16 @@
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right" style="display: flex; list-style: none;">
-                            <li><a href="dashboard.php">DASHBOARD</a></li>
+                            <li><a href="../product/bidding.php">BIDDING</a></li>
 
-                            <li><a href="#">Bidding Product</a></li>
+                            <li><a href="../product/product.php">SALE</a></li>
 
                             <li>
                                 <div class="dropdown">
                                     <a href="#" class="dropbtn">ACCOUNT</a>
                                     <div class="dropdown-content">
-                                        <a href="profile.php">My Profile</a>
-                                        <a href="change-password.php">Change Password</a>
+                                        <a href="../profile.php">My Profile</a>
+                                        <a href="../change-password.php">Change Password</a>
                                     </div>
                                 </div>
                             </li>

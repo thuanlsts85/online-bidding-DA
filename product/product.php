@@ -1,9 +1,9 @@
 <?php
 session_start();
 error_reporting(0);
-include('../../includes/data_connect.php');
-if (strlen($_SESSION['alogin']) == 0) {
-    header('location:../../index.php');
+include('../includes/data_connect.php');
+if (strlen($_SESSION['login']) == 0) {
+    header('location:../index.php');
 } else {
     if (isset($_GET['del'])) {
         $id = $_GET['del'];
@@ -18,7 +18,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
         $fetch_record = $query1->fetch(PDO::FETCH_ASSOC);
         $old_img = $fetch_record['img'];
-        $delete_path = "../assets/img/".$old_img;
+        $delete_path = "../assets/img/product/".$old_img;
 
         //if found image location to delete, delete others data
         if(unlink($delete_path)){
@@ -50,7 +50,7 @@ if (strlen($_SESSION['alogin']) == 0) {
         <meta name="author" content="" />
         <title>Online Auction Management System | Manage Products</title>
         <!-- CUSTOM STYLE  -->
-        <link href="../../assets/css/style.css" rel="stylesheet" />
+        <link href="../assets/css/style.css" rel="stylesheet" />
         <!-- GOOGLE FONT -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 
@@ -151,7 +151,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                         <td class="center"><?php echo htmlentities($result->description); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->end_time); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->start_price); ?></td>
-                                                        <td class="center"><?php echo "<img src='../assets/img/".htmlentities($result->img)."' style='max-height: 50px; max-width: 50px'> " ?></td>
+                                                        <td class="center"><?php echo "<img src='../assets/img/product/".htmlentities($result->img)."' style='max-height: 50px; max-width: 50px'> " ?></td>
                                                         <td class="center"><?php echo htmlentities($result->date_created); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->status); ?></td>
                                                         <td class="center">
@@ -167,11 +167,6 @@ if (strlen($_SESSION['alogin']) == 0) {
                                     <!-- Add Product -->
                                     <form role="form" method="post" action="add-product.php" enctype="multipart/form-data">
                                         <label><b>Add New Product</b></label>
-
-                                        <div class="form-group">
-                                            <label>Product ID</label>
-                                            <input class="form-control" type="text" name="id" autocomplete="off" require />
-                                        </div>
 
                                         <div class="form-group">
                                             <label>Product Name</label>

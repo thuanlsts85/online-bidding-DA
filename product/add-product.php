@@ -1,29 +1,33 @@
 <?php
 session_start();
 error_reporting(0);
-include('../../includes/data_connect.php');
-if (strlen($_SESSION['alogin']) == 0) {
-    header('location:../../index.php');
+include('../includes/data_connect.php');
+if (strlen($_SESSION['login']) == 0) {
+    header('location:../index.php');
 } else {
 
     if (isset($_POST['create'])) {
         // store image location
-        $target = "../assets/img/" . basename($_FILES['img']['name']);
+        $target = "../assets/img/product/" . basename($_FILES['img']['name']);
 
         // Get data from the input form
-        $id = $_POST['id'];
+        
         $name = $_POST['name'];
         $category_id = $_POST['category_id'];
         $description = $_POST['description'];
         $start_price = $_POST['start_price'];
         $end_time = $_POST['end_time'];
         $img = $_FILES['img']['name'];
-        $attributes = ['4G' => 'true', '2SIM' => 'Yes', 'brand' => 'Nokia'];
 
-        $sql = "INSERT INTO product(`id`,`name`,`category_id`,`description`,`start_price`,`end_time`,`img`) VALUES(:id,:name,:category_id,:description,:start_price,:end_time,:img)";
+        $att1 = $_POST['name'];
+        $value1 = $_POST['description'];
+        $attributes = [$att1 => $value1, '2SIM' => 'Yes', 'brand' => 'Nokia'];
+
+
+        $sql = "INSERT INTO product(`name`,`category_id`,`description`,`start_price`,`end_time`,`img`) VALUES(:name,:category_id,:description,:start_price,:end_time,:img)";
         $query = $pdo->prepare($sql);
 
-        $query->bindParam(':id', $id, PDO::PARAM_STR);
+        // $query->bindParam(':id', $id, PDO::PARAM_STR);
         $query->bindParam(':name', $name, PDO::PARAM_STR);
         $query->bindParam(':category_id', $category_id, PDO::PARAM_INT);
         $query->bindParam(':description', $description, PDO::PARAM_STR);
@@ -39,11 +43,13 @@ if (strlen($_SESSION['alogin']) == 0) {
         } else {
             $_SESSION['error'] = "Something went wrong. Please try again";
         }
+            //get id of the current added product
+            $product_id = $pdo->lastInsertId();
 
-        // Use insertOne to insert a collection
-        $res = $collection->insertOne([
-            '_id' => $id,
-            'attributes' => $attributes
-        ]);
+            // Use insertOne to insert a collection
+            $res = $collection->insertOne([
+                '_id' => $product_id,
+                'attributes' => $attributes
+            ]);
     }
 }

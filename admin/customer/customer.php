@@ -18,13 +18,13 @@ else{?>
 
     <title>Online Auction Management System | Admin Dash Board</title>
     <!-- CUSTOM STYLE  -->
-    <link href="../assets/css/style.css" rel="stylesheet" />
+    <link href="../../assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 </head>
 
 <body>
-    <?php include('includes/header.php'); ?>
+    <?php include('../includes/header.php'); ?>
     <!-- MENU SECTION END-->
     <div class="content-wrapper">
         <div class="container">

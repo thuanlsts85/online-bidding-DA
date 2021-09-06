@@ -29,7 +29,7 @@ if (isset($_POST['login'])) {
     $_SESSION['id'] = $result['id'];
     if ($result['status'] == 1) {
       $_SESSION['login'] = $email;
-      echo "<script type='text/javascript'> document.location ='dashboard.php'; </script>";
+      echo "<script type='text/javascript'> document.location ='/product/bidding.php'; </script>";
       exit;
     } else {
       // status != 1, account was locked by admin

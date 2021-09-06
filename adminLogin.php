@@ -26,7 +26,7 @@ if($result === false){
     echo "<script>alert('Invalid Details');</script>";
 } else{
     $_SESSION['alogin']=$_POST['email'];
-    echo "<script type='text/javascript'> document.location ='admin/dashboard.php'; </script>";
+    echo "<script type='text/javascript'> document.location ='admin/customer/customer.php'; </script>";
 }
 
 }
