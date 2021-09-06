@@ -18,25 +18,25 @@ if (strlen($_SESSION['login']) == 0) {
 
         $fetch_record = $query1->fetch(PDO::FETCH_ASSOC);
         $old_img = $fetch_record['img'];
-        $delete_path = "../assets/img/product/".$old_img;
+        $delete_path = "../assets/img/product/" . $old_img;
 
         //if found image location to delete, delete others data
-        if(unlink($delete_path)){
-        
-        $sql = "DELETE FROM product  WHERE id= :id";
-        $query = $pdo->prepare($sql);
+        if (unlink($delete_path)) {
 
-        $query->bindParam(':id', $id, PDO::PARAM_STR);
+            $sql = "DELETE FROM product  WHERE id= :id";
+            $query = $pdo->prepare($sql);
 
-        $query->execute();
+            $query->bindParam(':id', $id, PDO::PARAM_STR);
 
-        header('location:product.php');
-        $_SESSION['delmsg'] = "Product deleted successfully ";
-        }else{
+            $query->execute();
+
+            header('location:product.php');
+            $_SESSION['delmsg'] = "Product deleted successfully ";
+        } else {
             $_SESSION['error'] = "Unable to delete product";
         }
         // delete data on mongodb
-        $delete_result = $collection->deleteMany(['_id'=>$id]);
+        $delete_result = $collection->deleteMany(['_id' => $id]);
     }
 ?>
 
@@ -115,10 +115,15 @@ if (strlen($_SESSION['login']) == 0) {
                         <!-- Advanced Tables -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                Products Listing
+                                Products Listing of
+                                <p><?php
+                                    $uid = $_SESSION['id'];
+                                    echo $uid;
+                                    ?>
+                                </p>
                             </div>
                             <!-- <a href="add-category.php"><button>Add Category</button></a> -->
-
+                            <?php  ?>
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -137,8 +142,16 @@ if (strlen($_SESSION['login']) == 0) {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $sql = "SELECT p.id as product_id, p.name, c.name as cat_name, description, end_time, start_price, img, p.date_created, status FROM product p JOIN category c ON p.category_id = c.id";
+
+                                            <?php
+                                            $uid = $_SESSION['id'];
+                                            $sql = "SELECT p.id as product_id, p.name, c.name as cat_name, description, end_time, start_price, img, p.date_created, status FROM product p 
+                                                    JOIN category c ON p.category_id = c.id
+                                                    WHERE uid= :uid";
                                             $query = $pdo->prepare($sql);
+
+                                            $query->bindParam(':uid', $uid, PDO::PARAM_STR);
+
                                             $query->execute();
                                             $results = $query->fetchAll(PDO::FETCH_OBJ);
                                             if ($query->rowCount() > 0) {
@@ -151,7 +164,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <td class="center"><?php echo htmlentities($result->description); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->end_time); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->start_price); ?></td>
-                                                        <td class="center"><?php echo "<img src='../assets/img/product/".htmlentities($result->img)."' style='max-height: 50px; max-width: 50px'> " ?></td>
+                                                        <td class="center"><?php echo "<img src='../assets/img/product/" . htmlentities($result->img) . "' style='max-height: 50px; max-width: 50px'> " ?></td>
                                                         <td class="center"><?php echo htmlentities($result->date_created); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->status); ?></td>
                                                         <td class="center">
@@ -184,7 +197,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 $query->execute();
                                                 $results = $query->fetchAll(PDO::FETCH_OBJ);
                                                 if ($query->rowCount() > 0) {
-                                                    foreach ($results as $result) {               
+                                                    foreach ($results as $result) {
                                                 ?>
                                                         <option value="<?php echo htmlentities($result->id); ?>"><?php echo htmlentities($result->name); ?></option>
                                                 <?php }

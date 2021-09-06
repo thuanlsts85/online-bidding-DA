@@ -1,5 +1,6 @@
 CREATE TABLE `product` (
-  `id` varchar(30) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `uid` varchar(30) NOT NULL,
   `category_id` int NOT NULL ,
   `name` varchar(30) NOT NULL,
   `description` text NOT NULL,
@@ -79,7 +80,6 @@ insert into category (`name`) values
 ('Electronic'),
 ('Clothes');
 
-
 INSERT INTO admin (`id`,`Fname`,`Lname`,`password`,`email`,`phone`,`branch_id`) VALUES 
 ('987654321','thuan','le','123456','admin@gmail.com','0776345334',1);
 
@@ -98,3 +98,4 @@ insert into `bid` (`customer_id`, `product_id`, `current_price`,`status`) values
 ('123456789', 1, 1000, 2),
 ('987654321', 2, 2000, 1);
 
+SELECT email FROM customer WHERE email='thuanlsts851999@gmail.com' AND phone='0776345334' AND id='025861343';
