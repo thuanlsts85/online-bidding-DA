@@ -176,8 +176,11 @@ if (strlen($_SESSION['login']) == 0) {
                                         </tbody>
                                     </table>
 
-                                    <!-- Add Product -->
-                                    <form role="form" method="post" action="add-product.php" enctype="multipart/form-data">
+                                    
+                                </div>
+                            </div>
+                            <!-- Add Product -->
+                            <form role="form" method="post" action="add-product.php" enctype="multipart/form-data">
                                         <label><b>Add New Product</b></label>
 
                                         <div class="form-group">
@@ -226,8 +229,6 @@ if (strlen($_SESSION['login']) == 0) {
                                         <br>
                                         <button type="submit" name="create" class="btn btn-info">Create</button>
                                     </form>
-                                </div>
-                            </div>
                         </div>
                         <!--End Advanced Tables -->
                     </div>

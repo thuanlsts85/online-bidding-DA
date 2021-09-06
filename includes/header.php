@@ -20,7 +20,7 @@
 
                         <a href="../product/bidding.php">BIDDING</a>
 
-                        <a href="../product/product.php">SALE</a>
+                        <a href="../product/product.php">SELL</a>
 
                         <div class="dropdown">
                             <a href="#" class="dropbtn">ACCOUNT</a>
