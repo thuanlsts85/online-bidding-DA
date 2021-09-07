@@ -11,7 +11,7 @@ if (strlen($_SESSION['login']) == 0) {
         $target = "../assets/img/product/" . basename($_FILES['img']['name']);
 
         $uid = $_SESSION['id'];
-        
+
         // Get data from the input form
         $name = $_POST['name'];
         $category_id = $_POST['category_id'];
@@ -50,13 +50,24 @@ if (strlen($_SESSION['login']) == 0) {
         } else {
             $_SESSION['error'] = "Something went wrong. Please try again";
         }
-            //get id of the current added product
-            $product_id = $pdo->lastInsertId();
+        //get id of the current added product
+        $product_id = $pdo->lastInsertId();
 
-            // Use insertOne to insert a collection
-            $res = $collection->insertOne([
-                '_id' => $product_id,
-                'attributes' => $attributes
-            ]);
+        // create empty auction
+        $sql1 = "INSERT INTO auction(`product_id`,`current_price`) VALUES(:product_id, :current_price)";
+        $query1 = $pdo->prepare($sql1);
+
+        $query1->bindParam(':product_id', $product_id, PDO::PARAM_STR);
+        $query1->bindParam(':current_price', $start_price, PDO::PARAM_STR);
+
+        $query1->execute();
+
+        // Use insertOne to insert a collection
+        $res = $collection->insertOne([
+            '_id' => $product_id,
+            'attributes' => $attributes
+        ]);
+
+        
     }
 }
