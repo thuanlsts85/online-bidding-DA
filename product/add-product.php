@@ -45,29 +45,46 @@ if (strlen($_SESSION['login']) == 0) {
         $query->execute();
 
         if (move_uploaded_file($_FILES['img']['tmp_name'], $target)) {
-            $_SESSION['addmsg'] = "Product added successfully";
-            header('location:product.php');
+            //get id of the current added product
+            $product_id = $pdo->lastInsertId();
+
+            // create empty auction
+            $sql1 = "INSERT INTO auction(`product_id`,`current_price`) VALUES(:product_id, :current_price)";
+            $query1 = $pdo->prepare($sql1);
+
+            $query1->bindParam(':product_id', $product_id, PDO::PARAM_STR);
+            $query1->bindParam(':current_price', $start_price, PDO::PARAM_STR);
+
+            if ($query1->execute()) {
+                // Use insertOne to insert a collection
+                $res = $collection->insertOne([
+                    '_id' => $product_id,
+                    'attributes' => $attributes
+                ]);
+                $_SESSION['addmsg'] = "Product added successfully";
+                header('location:product.php');
+            } else {
+                $_SESSION['error'] = "Something went wrong in database";
+            }
         } else {
-            $_SESSION['error'] = "Something went wrong. Please try again";
+            $_SESSION['error'] = "Image file are too big or wrong type";
         }
-        //get id of the current added product
-        $product_id = $pdo->lastInsertId();
+        // //get id of the current added product
+        // $product_id = $pdo->lastInsertId();
 
-        // create empty auction
-        $sql1 = "INSERT INTO auction(`product_id`,`current_price`) VALUES(:product_id, :current_price)";
-        $query1 = $pdo->prepare($sql1);
+        // // create empty auction
+        // $sql1 = "INSERT INTO auction(`product_id`,`current_price`) VALUES(:product_id, :current_price)";
+        // $query1 = $pdo->prepare($sql1);
 
-        $query1->bindParam(':product_id', $product_id, PDO::PARAM_STR);
-        $query1->bindParam(':current_price', $start_price, PDO::PARAM_STR);
+        // $query1->bindParam(':product_id', $product_id, PDO::PARAM_STR);
+        // $query1->bindParam(':current_price', $start_price, PDO::PARAM_STR);
 
-        $query1->execute();
+        // $query1->execute();
 
         // Use insertOne to insert a collection
-        $res = $collection->insertOne([
-            '_id' => $product_id,
-            'attributes' => $attributes
-        ]);
-
-        
+        // $res = $collection->insertOne([
+        //     '_id' => $product_id,
+        //     'attributes' => $attributes
+        // ]);
     }
 }

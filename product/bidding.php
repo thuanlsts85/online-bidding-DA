@@ -70,18 +70,19 @@ if (strlen($_SESSION['login']) == 0) {
                                                       $features = $collection->find(['_id' => $result->product_id]);
                                                       foreach ($features as $one) {
 
-                                                            // Use for loop to extract the keys and values
-                                                            foreach ($one['attributes'] as $key => $val) {
-                                                                  echo "$key : $val " . '<br>';
-                                                            }
-                                                      }
-                                                      ?>
-                                                      <div class="button">
-                                                            <a href="add-auction.php?bid=<?php echo htmlentities($result->product_id); ?>">
-                                                                  Bid
-                                                            </a>
-                                                      </div>
-                                                </div>
+                                                // Use for loop to extract the keys and values
+                                                foreach ($one['attributes'] as $key => $val) {
+                                                      echo "$key : $val " . '<br>';
+                                                }
+                                          }
+                                          ?>
+                                          <div class="button">
+                                                <!-- <a href="add-auction.php?bid=<?php echo htmlentities($result->product_id); ?>">
+                                                      Bid
+                                                </a> -->
+                                                <a href="#">VIEW</a>
+                                          </div>
+                                    </div>
 
                                           </div>
                               <?php
