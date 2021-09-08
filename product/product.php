@@ -108,6 +108,16 @@ if (strlen($_SESSION['login']) == 0) {
                             </div>
                         <?php } ?>
 
+                        <?php if ($_SESSION['endmsg'] != "") { ?>
+                            <div class="col-md-6">
+                                <div class="alert alert-success">
+                                    <strong>Success :</strong>
+                                    <?php echo htmlentities($_SESSION['endmsg']); ?>
+                                    <?php echo htmlentities($_SESSION['endmsg'] = ""); ?>
+                                </div>
+                            </div>
+                        <?php } ?>
+
                     </div>
                 </div>
 
@@ -134,6 +144,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <th>Information</th>
                                                 <th>Close At</th>
                                                 <th>Start Price</th>
+                                                <th>Highest Price</th>
                                                 <th>Image</th>
                                                 <th>Created On</th>
                                                 <th>Status</th>
@@ -144,8 +155,8 @@ if (strlen($_SESSION['login']) == 0) {
 
                                             <?php
                                             $uid = $_SESSION['id'];
-                                            $sql = "SELECT p.id as product_id, p.name, c.name as cat_name, description, end_time, start_price, img, p.date_created, status FROM product p 
-                                                    JOIN category c ON p.category_id = c.id
+                                            $sql = "SELECT p.id as product_id, a.id as auction_id, p.name, c.name as cat_name, description, end_time, start_price, current_price, img, p.date_created, p.status FROM product p 
+                                                    JOIN category c ON p.category_id = c.id JOIN auction a ON a.product_id = p.id
                                                     WHERE uid= :uid";
                                             $query = $pdo->prepare($sql);
 
@@ -162,12 +173,20 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <td class="center"><?php echo htmlentities($result->cat_name); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->description); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->end_time); ?></td>
-                                                        <td class="center"><?php echo htmlentities($result->start_price); ?></td>
+                                                        <td class="center"><?php echo htmlentities($result->start_price); ?> VND</td>
+                                                        <td class="center"><?php echo htmlentities($result->current_price); ?> VND</td>
                                                         <td class="center"><?php echo "<img src='../assets/img/product/" . htmlentities($result->img) . "' style='max-height: 50px; max-width: 50px'> " ?></td>
                                                         <td class="center"><?php echo htmlentities($result->date_created); ?></td>
-                                                        <td class="center"><?php echo htmlentities($result->status); ?></td>
+                                                        <td class="center">
+                                                            <?php if ($result->status == 1) { ?>
+                                                                <span style="color: green">Active</span>
+                                                            <?php } else { ?>
+                                                                <span style="color: red">Blocked</span>
+                                                            <?php } ?>
+                                                        </td>
                                                         <td class="center">
                                                             <a href="product.php?del=<?php echo htmlentities($result->product_id); ?>" onclick="return confirm('Are you sure you want to delete?');"" >  <button class=" btn btn-danger">Delete</button>
+                                                            <a href="end-auction.php?end=<?php echo htmlentities($result->auction_id); ?>" onclick="return confirm('Are you sure you want to end bid?');"" >  <button class=" btn btn-danger">End Bid</button>
                                                         </td>
                                                     </tr>
                                             <?php
@@ -219,7 +238,7 @@ if (strlen($_SESSION['login']) == 0) {
 
                                 <div class="form-group">
                                     <label>Close Time</label>
-                                    <input class="form-control" type="datetime-local" name="end_time" autocomplete="off" require />
+                                    <input class="form-control" type="datetime-local" name="end_time" id="end_time" autocomplete="off" require step="any" />
                                 </div>
 
                                 <div class="form-group">
@@ -227,28 +246,28 @@ if (strlen($_SESSION['login']) == 0) {
                                     <input class="form-control" type="file" name="img" autocomplete="off" require />
                                 </div>
                                 <br>
-                                
-                                <label>Add Extra Features</label>
+
+                                <label>Add Features</label>
 
                                 <div class="form-group additional">
                                     <label> Feature 1:
                                         <input class="form-control" type="text" name="att1" autocomplete="off" placeholder="Name of feature" require />
                                     </label>
-                                    <input class="form-control" type="text" name="value1" autocomplete="off" placeholder="Value of this feature" require/>
+                                    <input class="form-control" type="text" name="value1" autocomplete="off" placeholder="Value of this feature" require />
                                 </div>
 
                                 <div class="form-group additional">
                                     <label> Feature 2:
-                                        <input class="form-control" type="text" name="att2" autocomplete="off" placeholder="Name of feature" require/>
+                                        <input class="form-control" type="text" name="att2" autocomplete="off" placeholder="Name of feature" require />
                                     </label>
-                                    <input class="form-control" type="text" name="value2" autocomplete="off" placeholder="Value of this feature" require/>
+                                    <input class="form-control" type="text" name="value2" autocomplete="off" placeholder="Value of this feature" require />
                                 </div>
 
                                 <div class="form-group additional">
                                     <label> Feature 3:
-                                        <input class="form-control" type="text" name="att3" autocomplete="off" placeholder="Name of feature" require/>
+                                        <input class="form-control" type="text" name="att3" autocomplete="off" placeholder="Name of feature" require />
                                     </label>
-                                    <input class="form-control" type="text" name="value3" autocomplete="off" placeholder="Value of this feature" require/>
+                                    <input class="form-control" type="text" name="value3" autocomplete="off" placeholder="Value of this feature" require />
                                 </div>
 
                                 <br>
@@ -267,4 +286,10 @@ if (strlen($_SESSION['login']) == 0) {
     </body>
 
     </html>
+    <script>
+        let newDate = new Date().valueOf()
+        let t = newDate + 86700000 - 61200000
+        newDate = new Date(t).toISOString().split('.')[0]
+        document.getElementById('end_time').min = newDate
+    </script>
 <?php } ?>

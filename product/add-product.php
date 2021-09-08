@@ -49,11 +49,11 @@ if (strlen($_SESSION['login']) == 0) {
             $product_id = $pdo->lastInsertId();
 
             // create empty auction
-            $sql1 = "INSERT INTO auction(`product_id`,`current_price`) VALUES(:product_id, :current_price)";
+            $sql1 = "INSERT INTO auction(`product_id`,`seller_id`) VALUES(:product_id, :seller_id)";
             $query1 = $pdo->prepare($sql1);
 
             $query1->bindParam(':product_id', $product_id, PDO::PARAM_STR);
-            $query1->bindParam(':current_price', $start_price, PDO::PARAM_STR);
+            $query1->bindParam(':seller_id', $uid, PDO::PARAM_STR);
 
             if ($query1->execute()) {
                 // Use insertOne to insert a collection

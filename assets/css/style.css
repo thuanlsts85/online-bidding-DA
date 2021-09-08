@@ -59,7 +59,11 @@ body {
 /* Dropdown Button */
 
 /* Dropdown Content */
-
+.dropdown{
+    border: none;
+    outline: none;
+    background: transparent;
+}
 .dropdown-content {
     display: none;
     position: absolute;
