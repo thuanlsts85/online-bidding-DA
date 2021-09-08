@@ -80,7 +80,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <!-- <a href="add-auction.php?bid=<?php echo htmlentities($result->product_id); ?>">
                                                       Bid
                                                 </a> -->
-                                                <a href="#">VIEW</a>
+                                                <a href="bidding.php?view=<?php echo htmlentities($result->product_id); ?>" onclick="togglePopup()">VIEW</a>
                                           </div>
                                     </div>
 
@@ -92,10 +92,46 @@ if (strlen($_SESSION['login']) == 0) {
                         </div>
                   </div>
             </div>
+
+            <div class="popup" id="popup-1">
+                  <?php
+                  // $id = $_GET['view'];
+                  $sql = "SELECT p.id as product_id, p.name, c.name as cat_name, description, end_time, start_price, img, p.date_created, status FROM product p 
+                                                    JOIN category c ON p.category_id = c.id";
+                  $query = $pdo->prepare($sql);
+
+                  $query->execute();
+
+                  $results = $query->fetchAll(PDO::FETCH_OBJ);
+
+                  if ($query->rowCount() > 0) {
+
+                        foreach ($results as $result) {
+                  ?>
+                              <div class="overlay"></div>
+                              <div class="content">
+                                    <div class="close-btn" onclick="togglePopup()">X</div>
+                                    <h1><?php echo $id ?></h1>
+                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi consequatur omnis vel sapiente dolores repellat sint a nobis eligendi nemo ut quo, similique ex repudiandae iste reprehenderit, qui dolorum. Repellendus!</p>
+                                    <span>Bidding price:</span>
+                                    <input type="text">
+                                    <button>Submit</button>
+                              </div>
+                  <?php
+                        }
+                  }
+                  ?>
+            </div>
+
             <!-- CONTENT-WRAPPER SECTION END-->
             <?php include('../includes/footer.php'); ?>
             <!-- FOOTER SECTION END-->
       </body>
 
       </html>
+      <script>
+            function togglePopup() {
+                  document.getElementById("popup-1").classList.toggle("active");
+            }
+      </script>
 <?php } ?>

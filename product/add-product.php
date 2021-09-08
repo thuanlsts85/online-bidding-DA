@@ -69,22 +69,5 @@ if (strlen($_SESSION['login']) == 0) {
         } else {
             $_SESSION['error'] = "Image file are too big or wrong type";
         }
-        // //get id of the current added product
-        // $product_id = $pdo->lastInsertId();
-
-        // // create empty auction
-        // $sql1 = "INSERT INTO auction(`product_id`,`current_price`) VALUES(:product_id, :current_price)";
-        // $query1 = $pdo->prepare($sql1);
-
-        // $query1->bindParam(':product_id', $product_id, PDO::PARAM_STR);
-        // $query1->bindParam(':current_price', $start_price, PDO::PARAM_STR);
-
-        // $query1->execute();
-
-        // Use insertOne to insert a collection
-        // $res = $collection->insertOne([
-        //     '_id' => $product_id,
-        //     'attributes' => $attributes
-        // ]);
     }
 }
