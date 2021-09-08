@@ -10,7 +10,7 @@ $collection = $client->aunction_db->product;
 // MySQL connection
 $host = 'localhost';
 $user = 'root'; //replace with your database username
-$password = 'Dinhthienly1'; //replace with your database password
+$password = 'Anhthu123'; //replace with your database password
 $dbname = 'auction'; //replace with your database name
 $dsn = '';
 

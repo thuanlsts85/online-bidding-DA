@@ -27,67 +27,69 @@ if (strlen($_SESSION['login']) == 0) {
             <!------MENU SECTION START-->
             <?php include('../includes/header.php'); ?>
 
-            <h1>Current Bidding Product</h1>
-
-
             <div class="bidding-page">
-                  <?php
-                  $sql = "SELECT p.id as product_id, p.name, c.name as cat_name, description, end_time, start_price, img, p.date_created, status FROM product p 
+                  <div class="bidding">
+                        <h1>Current Bidding Product</h1>
+                        <div class="content">
+                              <?php
+                              $sql = "SELECT p.id as product_id, p.name, c.name as cat_name, description, end_time, start_price, img, p.date_created, status FROM product p 
                                                     JOIN category c ON p.category_id = c.id";
-                  $query = $pdo->prepare($sql);
+                              $query = $pdo->prepare($sql);
 
-                  $query->execute();
+                              $query->execute();
 
-                  $results = $query->fetchAll(PDO::FETCH_OBJ);
+                              $results = $query->fetchAll(PDO::FETCH_OBJ);
 
-                  if ($query->rowCount() > 0) {
+                              if ($query->rowCount() > 0) {
 
-                        foreach ($results as $result) {
-                  ?>
-                              <div class="card">
-                                    <div class="img">
-                                          <?php echo "<img src='../assets/img/product/" . htmlentities($result->img) . "' style='max-height: 100%; max-width: 100%'> " ?>
-                                    </div>
-                                    <div class="info">
-                                          <h1 class="name">
-                                                <?php echo htmlentities($result->name) ?>
-                                          </h1>
-                                          <p class="status">Status:
-                                                <?php if ($result->status == 1) { ?>
-                                                      <span style="color: green">Active</span>
-                                                <?php } else { ?>
-                                                      <span style="color: red">Blocked</span>
-                                                <?php } ?>
-                                          </p>
-                                          <p class="price">Start price:
-                                                <?php echo htmlentities($result->start_price); ?>
-                                                VND
-                                          </p>
-                                          <p class="close">Close At:
-                                                <?php echo htmlentities($result->end_time); ?>
-                                          </p>
-                                          <?php
-                                          $features = $collection->find(['_id' => $result->product_id]);
-                                          foreach ($features as $one) {
+                                    foreach ($results as $result) {
+                              ?>
+                                          <div class="card">
+                                                <div class="img">
+                                                      <?php echo "<img src='../assets/img/product/" . htmlentities($result->img) . "' style='max-height: 100%; max-width: 100%'> " ?>
+                                                </div>
+                                                <div class="info">
+                                                      <h2 class="name">
+                                                            <?php echo htmlentities($result->name) ?>
+                                                      </h2>
+                                                      <p class="status">Status:
+                                                            <?php if ($result->status == 1) { ?>
+                                                                  <span style="color: green">Active</span>
+                                                            <?php } else { ?>
+                                                                  <span style="color: red">Blocked</span>
+                                                            <?php } ?>
+                                                      </p>
+                                                      <p class="price">Start price:
+                                                            <?php echo htmlentities($result->start_price); ?>
+                                                            VND
+                                                      </p>
+                                                      <p class="close">Close At:
+                                                            <?php echo htmlentities($result->end_time); ?>
+                                                      </p>
+                                                      <?php
+                                                      $features = $collection->find(['_id' => $result->product_id]);
+                                                      foreach ($features as $one) {
 
-                                                // Use for loop to extract the keys and values
-                                                foreach ($one['attributes'] as $key => $val) {
-                                                      echo "$key : $val " . '<br>';
-                                                }
-                                          }
-                                          ?>
-                                          <div class="button">
-                                                <a href="add-auction.php?bid=<?php echo htmlentities($result->product_id); ?>">
-                                                      Bid
-                                                </a>
+                                                            // Use for loop to extract the keys and values
+                                                            foreach ($one['attributes'] as $key => $val) {
+                                                                  echo "$key : $val " . '<br>';
+                                                            }
+                                                      }
+                                                      ?>
+                                                      <div class="button">
+                                                            <a href="add-auction.php?bid=<?php echo htmlentities($result->product_id); ?>">
+                                                                  Bid
+                                                            </a>
+                                                      </div>
+                                                </div>
+
                                           </div>
-                                    </div>
-
-                              </div>
-                  <?php
-                        }
-                  }
-                  ?>
+                              <?php
+                                    }
+                              }
+                              ?>
+                        </div>
+                  </div>
             </div>
             <!-- CONTENT-WRAPPER SECTION END-->
             <?php include('../includes/footer.php'); ?>

@@ -227,24 +227,24 @@ if (strlen($_SESSION['login']) == 0) {
                                     <input class="form-control" type="file" name="img" autocomplete="off" require />
                                 </div>
                                 <br>
-                                
+
                                 <label>Add Extra Features (Not Required)</label>
 
-                                <div class="form-group">
+                                <div class="form-group additional">
                                     <label> Feature 1:
                                         <input class="form-control" type="text" name="att1" autocomplete="off" placeholder="Name of feature" />
                                     </label>
                                     <input class="form-control" type="text" name="value1" autocomplete="off" placeholder="Value of this feature" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group additional">
                                     <label> Feature 2:
                                         <input class="form-control" type="text" name="att2" autocomplete="off" placeholder="Name of feature" />
                                     </label>
                                     <input class="form-control" type="text" name="value2" autocomplete="off" placeholder="Value of this feature" />
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group additional">
                                     <label> Feature 3:
                                         <input class="form-control" type="text" name="att3" autocomplete="off" placeholder="Name of feature" />
                                     </label>

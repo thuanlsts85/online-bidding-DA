@@ -26,15 +26,15 @@
                              <a href="../product/product.php">SELL</a>
                          </div>
 
-                         <div class="dropdown">
+                         <button class="dropdown">
                              <div class="left-div">
                                  <a href="#" class="dropbtn">ACCOUNT</a>
                              </div>
-                             <div class="dropdown-content">
+                             <div class="dropdown-content account">
                                  <a href="../change-password.php">Change Password</a>
                                  <a href="../profile.php">My Profile</a>
                              </div>
-                         </div>
+                         </button>
 
                      </div>
                  </div>
@@ -59,7 +59,7 @@
                              <a href="signup.php">SIGNUP</a>
                          </div>
 
-                         <div class="dropdown">
+                         <button class="dropdown">
                              <div class="left-div">
                                  <a href="#" class="dropbtn">LOGIN</a>
                              </div>
@@ -67,7 +67,7 @@
                                  <a href="adminLogin.php">Admin Login</a>
                                  <a href="index.php">User Login</a>
                              </div>
-                         </div>
+                         </button>
                      </div>
                  </div>
 

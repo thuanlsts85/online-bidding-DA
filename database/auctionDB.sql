@@ -71,33 +71,6 @@ CREATE TABLE `auction` (
 	PRIMARY KEY (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
 
-insert into product (`category_id`,`name`,`description`,`start_time`,`end_time`,`start_price`,`img`) values 
-(1,'Laptop', 'Cool', '2019-10-04 09:40:10','2019-10-04 10:40:10', 35, 'abc'),
-(1,'iPhone', 'Cool', '2019-07-21 08:30:10','2019-07-21 10:30:10', 40, 'abc123'),
-(2,'Nike T-shirt', 'Swag', '2021-03-22 08:30:10','2019-03-23 08:30:10', 50, 'nikeus');
-
-insert into category (`name`) values
-('Electronic'),
-('Clothes');
-
-INSERT INTO admin (`id`,`Fname`,`Lname`,`password`,`email`,`phone`,`branch_id`) VALUES 
-('987654321','thuan','le','123456','admin@gmail.com','0776345334',1);
-
-INSERT INTO branch (`city`,`address`,`hotline`) VALUES 
-('hcm','702 nguyen van linh','113'),
-('danang','address','114'),
-('hanoi','address','115')
-;
-
-insert into `customer` (`id`,`Fname`,`Lname`,`password`,`email`,`phone`,balance,`country`,branch_id,`address`,`img`) values
-('123456789','Mai','Cuong','123456','s3682365@gmail.com','1234567890',2000000,'VietNam',1,'123 duong 8 Go Vap','http'),
-('987654321','Nguyen','Dat','123456','s3697822@gmail.com','1234567891',3000000,'VietNam',2,'321 duong so 7 Phu My HUng Q7','http');
-
-
-insert into `bid` (`customer_id`, `product_id`, `current_price`,`status`) values
-('123456789', 1, 1000, 2),
-('987654321', 2, 2000, 1);
-
 DELIMITER $$
 CREATE PROCEDURE valid_bidding (IN cus_id VARCHAR(30), IN productID INT, IN bid_amount float)
 BEGIN
@@ -119,4 +92,3 @@ COMMIT;
 end if;
 END $$
 DELIMITER ;
-call valid_bidding('025861343',27,21);

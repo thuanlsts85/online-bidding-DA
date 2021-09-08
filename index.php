@@ -76,10 +76,9 @@ if (isset($_POST['login'])) {
             </div>
             <div class="panel-body">
               <form role="form" method="post">
-
                 <div class="form-group">
                   <label>Email</label>
-                  <input class="form-control" type="email" name="email" required autocomplete="off" />
+                  <input class="form-control" type="email" name="email" required autocomplete="on" />
                 </div>
                 <div class="form-group">
                   <label>Password</label>
