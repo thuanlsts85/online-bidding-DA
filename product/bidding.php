@@ -77,9 +77,10 @@ if (strlen($_SESSION['login']) == 0) {
                                           }
                                           ?>
                                           <div class="button">
-                                                <a href="add-auction.php?bid=<?php echo htmlentities($result->product_id); ?>">
+                                                <!-- <a href="add-auction.php?bid=<?php echo htmlentities($result->product_id); ?>">
                                                       Bid
-                                                </a>
+                                                </a> -->
+                                                <a href="#">VIEW</a>
                                           </div>
                                     </div>
 
