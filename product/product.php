@@ -141,10 +141,11 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <th>#</th>
                                                 <th>Product</th>
                                                 <th>Category</th>
-                                                <th>Information</th>
+                                                <th>Detail</th>
                                                 <th>Close At</th>
                                                 <th>Start Price</th>
                                                 <th>Highest Price</th>
+                                                <th>Current Winner</th>
                                                 <th>Image</th>
                                                 <th>Created On</th>
                                                 <th>Status</th>
@@ -155,7 +156,7 @@ if (strlen($_SESSION['login']) == 0) {
 
                                             <?php
                                             $uid = $_SESSION['id'];
-                                            $sql = "SELECT p.id as product_id, a.id as auction_id, p.name, c.name as cat_name, description, end_time, start_price, current_price, img, p.date_created, p.status FROM product p 
+                                            $sql = "SELECT p.id as product_id, a.id as auction_id, p.name, c.name as cat_name, description, end_time, start_price, current_price, a.customer_id as cus_id, img, p.date_created, p.status FROM product p 
                                                     JOIN category c ON p.category_id = c.id JOIN auction a ON a.product_id = p.id
                                                     WHERE uid= :uid";
                                             $query = $pdo->prepare($sql);
@@ -175,6 +176,23 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <td class="center"><?php echo htmlentities($result->end_time); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->start_price); ?> VND</td>
                                                         <td class="center"><?php echo htmlentities($result->current_price); ?> VND</td>
+                                                        <td class="center">
+                                                            <?php
+                                                            $cus_id = $result->cus_id;
+                                                            $sql1 = "SELECT email FROM customer WHERE id= :id";
+                                                            $query1 = $pdo->prepare($sql1);
+
+                                                            $query1->bindParam(':id', $cus_id, PDO::PARAM_STR);
+
+                                                            $query1->execute();
+                                                            $emails = $query1->fetchAll(PDO::FETCH_OBJ);
+                                                            if ($query1->rowCount() > 0) {
+                                                                foreach ($emails as $email) {
+                                                            ?>
+                                                                    <p><?php echo htmlentities($email->email); ?></p>
+                                                            <?php }
+                                                            } ?>
+                                                        </td>
                                                         <td class="center"><?php echo "<img src='../assets/img/product/" . htmlentities($result->img) . "' style='max-height: 50px; max-width: 50px'> " ?></td>
                                                         <td class="center"><?php echo htmlentities($result->date_created); ?></td>
                                                         <td class="center">
@@ -186,7 +204,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                         </td>
                                                         <td class="center">
                                                             <a href="product.php?del=<?php echo htmlentities($result->product_id); ?>" onclick="return confirm('Are you sure you want to delete?');"" >  <button class=" btn btn-danger">Delete</button>
-                                                            <a href="end-auction.php?end=<?php echo htmlentities($result->auction_id); ?>" onclick="return confirm('Are you sure you want to end bid?');"" >  <button class=" btn btn-danger">End Bid</button>
+                                                                <a href="end-auction.php?end=<?php echo htmlentities($result->auction_id); ?>" onclick="return confirm('Are you sure you want to end bid?');"" >  <button class=" btn btn-danger">End</button>
                                                         </td>
                                                     </tr>
                                             <?php

@@ -68,7 +68,7 @@ CREATE TABLE `auction` (
     `seller_id` VARCHAR(30) NOT NULL,
     `product_id` INT NOT NULL UNIQUE,
     `current_price` FLOAT DEFAULT 0,
-    `status` tinyint DEFAULT 1,
+    `condition` tinyint DEFAULT 1,
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP (),
 	PRIMARY KEY (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
@@ -126,8 +126,7 @@ IF duration > 0 THEN
 ROLLBACK;
 
 ELSE
-UPDATE product p INNER JOIN auction a ON p.id = a.product_id SET p.status = 0 WHERE a.id = auctionID;
-UPDATE auction SET status = 0 WHERE id = auctionID;
+UPDATE product p INNER JOIN auction a ON p.id = a.product_id SET p.status = 0, a.condition = 0 WHERE a.id = auctionID;
 UPDATE customer c2 INNER JOIN auction a2 ON c2.id = a2.seller_id SET c2.balance = c2.balance + a2.current_price WHERE a2.id = auctionID;
 UPDATE customer c INNER JOIN auction a ON c.id = a.customer_id SET c.balance = c.balance - a.current_price WHERE a.id = auctionID;
 
