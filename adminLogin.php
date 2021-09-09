@@ -19,13 +19,12 @@ if (isset($_POST['login'])) {
 
     $query->execute();
 
-    $result = $query->fetch(PDO::FETCH_ASSOC);
-
-    if ($result === false) {
-        echo "<script>alert('Invalid Details');</script>";
-    } else {
+    $count = $query->rowCount();
+    if ($count > 0) {
         $_SESSION['alogin'] = $_POST['email'];
-        echo "<script type='text/javascript'> document.location ='admin/customer/customer.php'; </script>";
+        echo "<script type='text/javascript'> document.location ='admin/customer/customer.php'; </script>";  
+    } else {
+        echo "<script>alert('Invalid Details');</script>";
     }
 }
 ?>

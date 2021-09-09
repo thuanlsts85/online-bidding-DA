@@ -152,6 +152,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                 <th>Image</th>
                                                 <th>Created On</th>
                                                 <th>Status</th>
+                                                <th>Bid Count</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -159,7 +160,7 @@ if (strlen($_SESSION['login']) == 0) {
 
                                             <?php
                                             $uid = $_SESSION['id'];
-                                            $sql = "SELECT p.id as product_id, a.id as auction_id, p.name, c.name as cat_name, description, end_time, start_price, current_price, a.customer_id as cus_id, img, p.date_created, p.status FROM product p 
+                                            $sql = "SELECT p.id as product_id, a.id as auction_id, p.name, c.name as cat_name, description, end_time, start_price, current_price, a.customer_id as cus_id, img, p.date_created, p.status, count_bid FROM product p 
                                                     JOIN category c ON p.category_id = c.id JOIN auction a ON a.product_id = p.id
                                                     WHERE uid= :uid";
                                             $query = $pdo->prepare($sql);
@@ -205,6 +206,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                                 <span style="color: red">Blocked</span>
                                                             <?php } ?>
                                                         </td>
+                                                        <td class="center"><?php echo htmlentities($result->count_bid); ?></td>
                                                         <td class="center">
                                                             <a href="product.php?del=<?php echo htmlentities($result->product_id); ?>" onclick="return confirm('Are you sure you want to delete?');"" >  <button class=" btn btn-danger">Delete</button>
                                                                 <a href="end-auction.php?end=<?php echo htmlentities($result->auction_id); ?>" onclick="return confirm('Are you sure you want to end bid?');"" >  <button class=" btn btn-danger">End</button>

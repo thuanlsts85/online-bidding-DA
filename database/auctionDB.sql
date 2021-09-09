@@ -69,6 +69,7 @@ CREATE TABLE `auction` (
     `product_id` INT NOT NULL UNIQUE,
     `current_price` FLOAT DEFAULT 0,
     `condition` tinyint DEFAULT 1,
+    `count_bid` int DEFAULT 0,
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP (),
 	PRIMARY KEY (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
@@ -101,7 +102,7 @@ elseif (duration < 0 or duration = 0) then
 rollback;
 
 else
-update auction a set a.current_price = bid_amount, a.customer_id = cus_id where a.product_id = productID;
+update auction a set a.current_price = bid_amount, a.customer_id = cus_id, a.count_bid = a.count_bid + 1 where a.product_id = productID;
 COMMIT;
 end if;
 END $$
@@ -137,7 +138,6 @@ DELIMITER ;
 
 -- Trigger prevent delete product when in bidding
 DELIMITER $$
-
 CREATE TRIGGER before_product_delete
 BEFORE DELETE
 ON product FOR EACH ROW
@@ -146,6 +146,6 @@ BEGIN
    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot delete product now';
    END IF;
 END$$    
-
 DELIMITER ;
--- drop trigger before_product_delete;
+
+drop trigger before_product_delete

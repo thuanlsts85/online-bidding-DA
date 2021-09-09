@@ -30,11 +30,28 @@ if (strlen($_SESSION['login']) == 0) {
             <div class="bidding-page">
                   <div class="bidding">
                         <h1>Current Bidding Product</h1>
+                        <form method="post">
+                              
+                                    <a href="bidding.php?sort=end_time" name="sort">Close Time</a>
+                                    <a href="bidding.php?sort=current_price" name="sort">Current Price</a>
+                                    <a href="bidding.php?sort=count_bid" name="sort">Bidding Times</a>
+                             
+                        </form>
                         <div class="content">
                               <?php
+                                    
                               $id = $_SESSION['id'];
-                              $sql = "SELECT p.id as product_id, p.name, c.name as cat_name, description, end_time, start_price, img, p.date_created, status FROM product p 
-                                                    JOIN category c ON p.category_id = c.id WHERE status = 1 AND uid <> :id";
+                             
+                              $sql = "SELECT p.id as product_id, p.name, c.name as cat_name, description, end_time, start_price, current_price, img, p.date_created, status, count_bid 
+                                          FROM product p JOIN category c ON p.category_id = c.id JOIN auction a ON p.id = product_id 
+                                          WHERE status = 1 AND uid <> :id";
+
+                              if(isset($_GET['sort']) && strlen(trim($_GET['sort'])) > 0){
+                                    //need to protect this because it is not a string being prepared...
+                                    $sort = addslashes(trim($_GET['sort']));
+                                    $sql .= " ORDER BY $sort DESC";
+                              }else{$sql;}
+                                                 
                               $query = $pdo->prepare($sql);
 
                               $query->bindParam(':id', $id, PDO::PARAM_STR);
@@ -55,6 +72,9 @@ if (strlen($_SESSION['login']) == 0) {
                                                       <h2 class="name">
                                                             <?php echo htmlentities($result->name) ?>
                                                       </h2>
+                                                      <p class="bid">Bid times:
+                                                      <?php echo htmlentities($result->count_bid); ?>
+                                                      </p>
                                                       <p class="status">Status:
                                                             <?php if ($result->status == 1) { ?>
                                                                   <span style="color: green">Active</span>

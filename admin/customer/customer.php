@@ -5,6 +5,8 @@ include('../../includes/data_connect.php');
 if (strlen($_SESSION['alogin']) == 0) {
     header('location:../../index.php');
 } else {
+    $email = $_SESSION['alogin'];
+
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -30,10 +32,25 @@ if (strlen($_SESSION['alogin']) == 0) {
             <div class="container">
                 <div class="row pad-botm">
                     <div class="col-md-12">
-                        <h4 class="header-line">MANAGE CUSTOMER</h4>
+                        <h4 class="header-line">MANAGE CUSTOMER ON BRANCH:
+                            <?php
+                            $sql1 = "SELECT branch_id FROM admin WHERE email= :email";
+                            $query1 = $pdo->prepare($sql1);
+                            $query1->bindParam(':email', $email, PDO::PARAM_STR);
+                            $query1->execute();
+                            $result = $query1->fetch(PDO::FETCH_ASSOC);
+                            echo $result['branch_id'];
+                            if ($result->status == 1) {
+                                echo 'Active';
+                            } else { 
+                                echo 'Blocked';
+                             } 
+                            ?>
+                        </h4>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
 
         <!-- CONTENT-WRAPPER SECTION END-->
