@@ -6,37 +6,40 @@ if (strlen($_SESSION['login']) == 0) {
     header('location:../index.php');
 } else {
     if (isset($_GET['del'])) {
-        $id = $_GET['del'];
+        try {
+            $id = $_GET['del'];
 
-        // get old img to delete on the folder
-        $sql1 = "SELECT * FROM product WHERE id= :id";
-        $query1 = $pdo->prepare($sql1);
+            // get old img to delete on the folder
+            $sql1 = "SELECT * FROM product WHERE id= :id";
+            $query1 = $pdo->prepare($sql1);
 
-        $query1->bindParam(':id', $id, PDO::PARAM_STR);
+            $query1->bindParam(':id', $id, PDO::PARAM_STR);
 
-        $query1->execute();
+            $query1->execute();
 
-        $fetch_record = $query1->fetch(PDO::FETCH_ASSOC);
-        $old_img = $fetch_record['img'];
-        $delete_path = "../assets/img/product/" . $old_img;
+            $fetch_record = $query1->fetch(PDO::FETCH_ASSOC);
+            $old_img = $fetch_record['img'];
+            $delete_path = "../assets/img/product/" . $old_img;
 
-        //if found image location to delete, delete others data
-        if (unlink($delete_path)) {
 
             $sql = "DELETE FROM product  WHERE id= :id";
             $query = $pdo->prepare($sql);
 
             $query->bindParam(':id', $id, PDO::PARAM_STR);
 
-            $query->execute();
-
-            header('location:product.php');
-            $_SESSION['delmsg'] = "Product deleted successfully ";
-        } else {
-            $_SESSION['error'] = "Unable to delete product";
+            if ($query->execute()) {
+                unlink($delete_path);
+                header('location:product.php');
+                $_SESSION['delmsg'] = "Product deleted successfully ";
+            } else {
+                $_SESSION['error'] = "Unable to delete product";
+            }
+            // delete data on mongodb
+            $delete_result = $collection->deleteMany(['_id' => $id]);
+        } catch (PDOException $e) {
+            $error = "Error: " . $e->getMessage();
+            echo '<script type="text/javascript">alert("' . $error . '");</script>';
         }
-        // delete data on mongodb
-        $delete_result = $collection->deleteMany(['_id' => $id]);
     }
 ?>
 

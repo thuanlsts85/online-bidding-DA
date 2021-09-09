@@ -134,3 +134,18 @@ COMMIT;
 END IF;
 END $$
 DELIMITER ;
+
+-- Trigger prevent delete product when in bidding
+DELIMITER $$
+
+CREATE TRIGGER before_product_delete
+BEFORE DELETE
+ON product FOR EACH ROW
+BEGIN
+   IF (EXISTS (SELECT status FROM product WHERE status = 1)) THEN
+   SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot delete product now';
+   END IF;
+END$$    
+
+DELIMITER ;
+-- drop trigger before_product_delete;
