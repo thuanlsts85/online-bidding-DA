@@ -167,8 +167,8 @@ if (strlen($_SESSION['login']) == 0) {
                       </div>
 
                       <div class="form-group">
-                        <label>Balance</label>
-                        <input class="form-control" type="number" name="balance" value="<?php echo htmlentities($result->balance); ?>" autocomplete="off" required />
+                        <label>Balance:</label>
+                        <span><?php echo htmlentities($result->balance); ?> VND</span>
                       </div>
 
                       <div class="form-group">

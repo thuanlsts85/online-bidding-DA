@@ -20,10 +20,12 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
+
 ::-webkit-scrollbar {
     width: 5px;
     scroll-behavior: smooth;
 }
+
 ::-webkit-scrollbar-thumb {
     background: grey;
     /* border-radius: 50%; */
@@ -59,11 +61,13 @@ body {
 /* Dropdown Button */
 
 /* Dropdown Content */
-.dropdown{
+
+.dropdown {
     border: none;
     outline: none;
     background: transparent;
 }
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -160,6 +164,7 @@ body {
 /* =============================================================
    DASHBOARD STYLES
  ============================================================ */
+
 .bidding-page {
     width: 100%;
     max-width: 1320px;
@@ -181,6 +186,7 @@ body {
     padding-bottom: 1rem;
     border-bottom: 2px solid rgba(128, 128, 128, 0.2);
 }
+
 .bidding-page .content {
     width: 100%;
     height: 100%;
@@ -192,6 +198,17 @@ body {
     grid-template-columns: repeat(4, auto);
     justify-content: space-between;
     border-bottom: 2px solid rgba(128, 128, 128, 0.2);
+}
+
+.sort {
+    display: flex;
+    padding: 0.25rem 2rem;
+    flex-wrap: nowrap;
+}
+
+.sort_att a{
+    text-decoration: none;
+    padding: 0 2rem;
 }
 
 .card {
@@ -208,7 +225,9 @@ body {
     overflow-x: hidden;
     overflow-y: scroll;
     width: 100%;
+    height: 220px;
 }
+
 .card .info h2 {
     text-transform: capitalize;
     font-weight: 800;
@@ -230,6 +249,11 @@ body {
     outline: none;
 }
 
+.feature-scroll {
+    overflow-y: auto;
+    height: 110px;
+}
+
 .button a {
     background-color: #4caf50;
     border: none;
@@ -242,7 +266,50 @@ body {
     width: 100%;
     transition-duration: 0.4s;
 }
+
+#att-form{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    counter-reset: thuan;
+}
+
+#mongoLength{
+    width: 20px;
+    height: 20px;
+    border: none;
+    outline: none;
+    user-select: none;
+    position: absolute;
+    right: 101%;
+    top: 0%;
+    background-color: pink;
+    text-align: center;
+    font-weight: bold;
+}
+
+.get-input-att{
+    position: absolute;
+    bottom: 14%;
+    right: 101%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(82, 104, 230);
+    border-radius: 50%;
+    font-size: 1.5rem;
+    color: #fff;
+    line-height: 20px;
+    text-align: center;
+    padding: 0;
+}
+
 /* Pop up modal */
+
 .popup .overlay {
     position: fixed;
     top: 0px;
@@ -268,7 +335,7 @@ body {
     box-sizing: border-box;
 }
 
-.popup .close-btn{
+.popup .close-btn {
     cursor: pointer;
     position: absolute;
     right: 20px;
@@ -284,11 +351,11 @@ body {
     border-radius: 50%;
 }
 
-.popup.active .overlay{
+.popup.active .overlay {
     display: block;
 }
 
-.popup.popup.active .content{
+.popup.popup.active .content {
     transition: all 300ms ease-in-out;
     transform: translate(-50%, -50%) scale(1);
 }
@@ -306,12 +373,16 @@ body {
     border-top: 5px solid #9170e4;
 }
 
-.footer-section a,
-.footer-section a:hover {
+.footer-section a, .footer-section a:hover {
     color: #000;
 }
 
 /* form */
-.row .col-md-12 .panel form .additional label{
+
+.row .col-md-12 .panel form .additional label {
     margin-bottom: 0.5rem;
+}
+
+.panel{
+    position: relative;
 }

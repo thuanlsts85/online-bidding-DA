@@ -29,14 +29,17 @@ if (strlen($_SESSION['login']) == 0) {
 
             <div class="bidding-page">
                   <div class="bidding">
-                        <h1>Current Bidding Product</h1>
-                        <form method="post">
-                              
-                                    <a href="bidding.php?sort=end_time" name="sort">Close Time</a>
+                  <h1>Current Bidding Product</h1>
+                        <div class="sort">
+                        <b>Sort product by:</b>
+                        <form method="post" class="sort_att">
+                                    <a href="bidding.php?sort=end_time" name="sort" style="text-decoration: none;">Close Time</a>
                                     <a href="bidding.php?sort=current_price" name="sort">Current Price</a>
                                     <a href="bidding.php?sort=count_bid" name="sort">Bidding Times</a>
-                             
                         </form>
+                        <a href="bidding.php"><button>CLEAR</button></a>
+                        </div>
+                        
                         <div class="content">
                               <?php
                                     
@@ -44,7 +47,7 @@ if (strlen($_SESSION['login']) == 0) {
                              
                               $sql = "SELECT p.id as product_id, p.name, c.name as cat_name, description, end_time, start_price, current_price, img, p.date_created, status, count_bid 
                                           FROM product p JOIN category c ON p.category_id = c.id JOIN auction a ON p.id = product_id 
-                                          WHERE status = 1 AND uid <> :id";
+                                          WHERE status = 1 AND uid <> :id AND end_time-now()>0";
 
                               if(isset($_GET['sort']) && strlen(trim($_GET['sort'])) > 0){
                                     //need to protect this because it is not a string being prepared...
@@ -82,8 +85,8 @@ if (strlen($_SESSION['login']) == 0) {
                                                                   <span style="color: red">Blocked</span>
                                                             <?php } ?>
                                                       </p>
-                                                      <p class="price">Start price:
-                                                            <?php echo htmlentities($result->start_price); ?>
+                                                      <p class="price">Highest Bid:
+                                                            <?php echo htmlentities($result->current_price); ?>
                                                             VND
                                                       </p>
                                                       <p class="close">Close At:
@@ -99,12 +102,13 @@ if (strlen($_SESSION['login']) == 0) {
                                                             }
                                                       }
                                                       ?>
-                                                      <div class="button">
+                                                      
+                                                </div>
+                                                <div class="button">
                                                             <a href="detail.php?view=<?php echo htmlentities($result->product_id); ?>">
                                                                   VIEW DETAIL
                                                             </a>
                                                       </div>
-                                                </div>
 
                                           </div>
                               <?php
@@ -113,11 +117,12 @@ if (strlen($_SESSION['login']) == 0) {
                               ?>
                         </div>
                   </div>
-            </div>
-
-            <!-- CONTENT-WRAPPER SECTION END-->
+                     <!-- CONTENT-WRAPPER SECTION END-->
             <?php include('../includes/footer.php'); ?>
             <!-- FOOTER SECTION END-->
+            </div>
+
+         
       </body>
 
       </html>

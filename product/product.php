@@ -37,7 +37,7 @@ if (strlen($_SESSION['login']) == 0) {
             // delete data on mongodb
             $delete_result = $collection->deleteMany(['_id' => $id]);
         } catch (PDOException $e) {
-            $error = "Error: " . $e->getMessage();
+            $error = $e->getMessage();
             echo '<script type="text/javascript">alert("' . $error . '");</script>';
         }
     }
@@ -221,9 +221,10 @@ if (strlen($_SESSION['login']) == 0) {
 
                                 </div>
                             </div>
+                          
                             <!-- Add Product -->
                             <form role="form" method="post" action="add-product.php" enctype="multipart/form-data">
-                                <label><b>Add New Product</b></label>
+                                
 
                                 <div class="form-group">
                                     <label>Product Name</label>
@@ -260,7 +261,7 @@ if (strlen($_SESSION['login']) == 0) {
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Close Time</label>
+                                    <label>Close Time - Must be more than 5 minutes</label>
                                     <input class="form-control" type="datetime-local" name="end_time" id="end_time" autocomplete="off" require step="any" />
                                 </div>
 
@@ -270,32 +271,16 @@ if (strlen($_SESSION['login']) == 0) {
                                 </div>
                                 <br>
 
-                                <label>Add Features</label>
+                               
 
-                                <div class="form-group additional">
-                                    <label> Feature 1:
-                                        <input class="form-control" type="text" name="att1" autocomplete="off" placeholder="Name of feature" require />
-                                    </label>
-                                    <input class="form-control" type="text" name="value1" autocomplete="off" placeholder="Value of this feature" require />
-                                </div>
-
-                                <div class="form-group additional">
-                                    <label> Feature 2:
-                                        <input class="form-control" type="text" name="att2" autocomplete="off" placeholder="Name of feature" require />
-                                    </label>
-                                    <input class="form-control" type="text" name="value2" autocomplete="off" placeholder="Value of this feature" require />
-                                </div>
-
-                                <div class="form-group additional">
-                                    <label> Feature 3:
-                                        <input class="form-control" type="text" name="att3" autocomplete="off" placeholder="Name of feature" require />
-                                    </label>
-                                    <input class="form-control" type="text" name="value3" autocomplete="off" placeholder="Value of this feature" require />
-                                </div>
-
+                                <div id="att-form">
+                                    <input type="text" id="mongoLength" name="mongoLength">
+                                </div>          
+                                
                                 <br>
                                 <button type="submit" name="create" class="btn btn-info">Create</button>
                             </form>
+                                <button class="get-input-att" onclick="newinput()">+</button>
                         </div>
                         <!--End Advanced Tables -->
                     </div>
@@ -314,5 +299,40 @@ if (strlen($_SESSION['login']) == 0) {
         let t = newDate + 86700000 - 61200000
         newDate = new Date(t).toISOString().split('.')[0]
         document.getElementById('end_time').min = newDate
+    </script>
+
+    <script>
+        var id = 0;
+        var newinput = function() {
+            var parent = document.getElementById('att-form')
+            var header = document.createElement("h4")
+            var field = document.createElement("input")
+            var attName = document.createElement("input")
+
+            header.innerHTML = "Feature "+ id
+
+            //Attribute name
+            attName.id = "attName" + id;
+            attName.name = "att" + id
+            attName.class = "feature-mongo"
+            attName.type = "text"
+            attName.placeholder = "Name of feature"
+
+            //Attriube value
+            field.id = "attValue" + id;
+            field.name = "value" + id
+            field.class = "form-control"
+            field.type = "text"
+            field.placeholder = "Value of this feature"
+
+            parent.appendChild(header);
+            parent.appendChild(attName);
+            parent.appendChild(field);
+
+            id += 1;
+            document.getElementById('mongoLength').value = id
+
+            
+        }
     </script>
 <?php } ?>

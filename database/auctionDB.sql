@@ -69,6 +69,7 @@ CREATE TABLE `auction` (
     `product_id` INT NOT NULL UNIQUE,
     `current_price` FLOAT DEFAULT 0,
     `condition` tinyint DEFAULT 1,
+    `isUndo` tinyint DEFAULT 0,
     `count_bid` int DEFAULT 0,
     `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP (),
 	PRIMARY KEY (`id`)
@@ -79,9 +80,9 @@ DELIMITER $$
 CREATE PROCEDURE valid_bidding (IN cus_id VARCHAR(30), IN productID INT, IN bid_amount float)
 BEGIN
 DECLARE cus_balance float;
-DECLARE cur_price float;
 DECLARE duration float;
 DECLARE first_price float;
+DECLARE cur_price float;
 START TRANSACTION;
 
 SELECT balance INTO cus_balance FROM customer c WHERE c.id=cus_id;
@@ -95,7 +96,7 @@ rollback;
 elseif (bid_amount < first_price or bid_amount = first_price) then
 rollback;
 
-elseif (bid_amount < cur_price or bid_amount = cur_price) then
+elseif (bid_amount = cur_price) then
 rollback;
 
 elseif (duration < 0 or duration = 0) then
@@ -142,10 +143,22 @@ CREATE TRIGGER before_product_delete
 BEFORE DELETE
 ON product FOR EACH ROW
 BEGIN
-   IF (EXISTS (SELECT status FROM product WHERE status = 1)) THEN
+   IF OLD.status = 1 THEN
    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot delete product now';
    END IF;
 END$$    
 DELIMITER ;
 
+-- BIDDING PROCESS TRIGGER
+-- Trigger check bid amount
+DELIMITER $$
+CREATE TRIGGER before_bid
+BEFORE UPDATE
+ON auction FOR EACH ROW
+BEGIN
+   IF OLD.current_price > NEW.current_price THEN
+   SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Your bid amount must be higher than current bid amount';
+   END IF;
+END$$    
+DELIMITER ;
 drop trigger before_product_delete
