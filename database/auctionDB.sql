@@ -161,4 +161,7 @@ BEGIN
    END IF;
 END$$    
 DELIMITER ;
-drop trigger before_product_delete
+
+-- add index 
+alter table auction
+add index idx_customer (customer_id);
