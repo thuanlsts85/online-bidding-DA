@@ -2,6 +2,7 @@
 session_start();
 error_reporting(0);
 include('../includes/data_connect.php');
+//make sure user signed in
 if (strlen($_SESSION['login']) == 0) {
     header('location:../index.php');
 } else {
@@ -20,10 +21,12 @@ if (strlen($_SESSION['login']) == 0) {
         $end_time = $_POST['end_time'];
         $img = $_FILES['img']['name'];
 
+        //get length of attribute that will be add on mongodb 
         $length = $_POST['mongoLength'];
 
         $attributes = [];
 
+        // create loop to add attributes and values for them on mongodb
         for ($i=0; $i < $length; $i++) { 
             $string = strval($i);
             $att[$i] = $_POST['att'.$string];
@@ -31,11 +34,10 @@ if (strlen($_SESSION['login']) == 0) {
             $attributes+=([$att[$i] => $value[$i]]);
         }
 
-
+        //add data into product table
         $sql = "INSERT INTO product(`name`,`uid`,`category_id`,`description`,`start_price`,`end_time`,`img`) VALUES(:name,:uid,:category_id,:description,:start_price,:end_time,:img)";
         $query = $pdo->prepare($sql);
 
-        // $query->bindParam(':id', $id, PDO::PARAM_STR);
         $query->bindParam(':name', $name, PDO::PARAM_STR);
         $query->bindParam(':uid', $uid, PDO::PARAM_STR);
         $query->bindParam(':category_id', $category_id, PDO::PARAM_INT);
@@ -46,11 +48,12 @@ if (strlen($_SESSION['login']) == 0) {
 
         $query->execute();
 
+        // add product img into selected folder
         if (move_uploaded_file($_FILES['img']['tmp_name'], $target)) {
             //get id of the current added product
             $product_id = $pdo->lastInsertId();
 
-            // create empty auction
+            // create auction with product id
             $sql1 = "INSERT INTO auction(`product_id`,`seller_id`) VALUES(:product_id, :seller_id)";
             $query1 = $pdo->prepare($sql1);
 

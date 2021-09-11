@@ -2,11 +2,13 @@
 session_start();
 error_reporting(0);
 include('../includes/data_connect.php');
+//make sure user signed in
 if (strlen($_SESSION['login']) == 0) {
     header('location:../index.php');
 } else {
     if (isset($_GET['del'])) {
         try {
+            // received product id when user decide delete
             $id = $_GET['del'];
 
             // get old img to delete on the folder
@@ -21,12 +23,13 @@ if (strlen($_SESSION['login']) == 0) {
             $old_img = $fetch_record['img'];
             $delete_path = "../assets/img/product/" . $old_img;
 
-
+            // delete product with received id
             $sql = "DELETE FROM product  WHERE id= :id";
             $query = $pdo->prepare($sql);
 
             $query->bindParam(':id', $id, PDO::PARAM_STR);
 
+            //delete existed img on the folder
             if ($query->execute()) {
                 unlink($delete_path);
                 header('location:product.php');
@@ -34,6 +37,7 @@ if (strlen($_SESSION['login']) == 0) {
             } else {
                 $_SESSION['error'] = "Unable to delete product";
             }
+
             // delete data on mongodb
             $delete_result = $collection->deleteMany(['_id' => $id]);
         } catch (PDOException $e) {
@@ -71,6 +75,7 @@ if (strlen($_SESSION['login']) == 0) {
                         <h4 class="header-line">Manage Products</h4>
                     </div>
                     <div class="row">
+                        <!-- set notification of function status return to this page -->
                         <?php if ($_SESSION['error'] != "") { ?>
                             <div class="col-md-6">
                                 <div class="alert alert-danger">
@@ -136,6 +141,7 @@ if (strlen($_SESSION['login']) == 0) {
                                 ?>
                             </div>
 
+                            <!-- create sell list of product for customer -->
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -180,6 +186,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                         <td class="center"><?php echo htmlentities($result->end_time); ?></td>
                                                         <td class="center"><?php echo htmlentities($result->start_price); ?> VND</td>
                                                         <td class="center"><?php echo htmlentities($result->current_price); ?> VND</td>
+                                                        <!-- get customer email with the highest bid -->
                                                         <td class="center">
                                                             <?php
                                                             $cus_id = $result->cus_id;
@@ -189,13 +196,9 @@ if (strlen($_SESSION['login']) == 0) {
                                                             $query1->bindParam(':id', $cus_id, PDO::PARAM_STR);
 
                                                             $query1->execute();
-                                                            $emails = $query1->fetchAll(PDO::FETCH_OBJ);
-                                                            if ($query1->rowCount() > 0) {
-                                                                foreach ($emails as $email) {
+                                                            $email = $query1->fetch(PDO::FETCH_ASSOC);
+                                                            echo $email['email'];                                                      
                                                             ?>
-                                                                    <p><?php echo htmlentities($email->email); ?></p>
-                                                            <?php }
-                                                            } ?>
                                                         </td>
                                                         <td class="center"><?php echo "<img src='../assets/img/product/" . htmlentities($result->img) . "' style='max-height: 50px; max-width: 50px'> " ?></td>
                                                         <td class="center"><?php echo htmlentities($result->date_created); ?></td>
@@ -206,11 +209,20 @@ if (strlen($_SESSION['login']) == 0) {
                                                                 <span style="color: red">Blocked</span>
                                                             <?php } ?>
                                                         </td>
+                                                        
+                                                        <!-- set condition for end button -->
                                                         <td class="center"><?php echo htmlentities($result->count_bid); ?></td>
+                                                        <?php if($result->status==1) { ?>
                                                         <td class="center">
-                                                            <a href="product.php?del=<?php echo htmlentities($result->product_id); ?>" onclick="return confirm('Are you sure you want to delete?');"" >  <button class=" btn btn-danger">Delete</button>
-                                                                <a href="end-auction.php?end=<?php echo htmlentities($result->auction_id); ?>" onclick="return confirm('Are you sure you want to end bid?');"" >  <button class=" btn btn-danger">End</button>
+                                                            <!-- <a href="product.php?del=<?php echo htmlentities($result->product_id); ?>" onclick="return confirm('Are you sure you want to delete?');"" >  <button class=" btn btn-danger">Delete</button> -->
+                                                            <a href="end-auction.php?end=<?php echo htmlentities($result->auction_id); ?>" onclick="return confirm('Are you sure you want to end bid?');"" >  <button class=" btn btn-danger">End</button>
                                                         </td>
+                                                        <?php } else{ ?>
+                                                            <td class="center">
+                                                            <!-- <a href="product.php?del=<?php echo htmlentities($result->product_id); ?>" onclick="return confirm('Are you sure you want to delete?');"" >  <button class=" btn btn-danger">Delete</button> -->
+                                                            <a href="#" onclick="return confirm('This auction was ended');"" >  <button class=" btn btn-danger">Ended</button>
+                                                        </td>
+                                                       <?php } ?>
                                                     </tr>
                                             <?php
                                                 }
@@ -221,10 +233,10 @@ if (strlen($_SESSION['login']) == 0) {
 
                                 </div>
                             </div>
-                          
-                            <!-- Add Product -->
+
+                            <!-- Add Product For Bidding Form -->
                             <form role="form" method="post" action="add-product.php" enctype="multipart/form-data">
-                                
+
 
                                 <div class="form-group">
                                     <label>Product Name</label>
@@ -232,6 +244,7 @@ if (strlen($_SESSION['login']) == 0) {
                                 </div>
 
                                 <div class="form-group">
+                                    <!-- get category for selection option -->
                                     <label>Category</label>
                                     <select class="form-control" type="text" name="category_id" autocomplete="off" require>
                                         <option value="">Select Category</option>
@@ -270,17 +283,18 @@ if (strlen($_SESSION['login']) == 0) {
                                     <input class="form-control" type="file" name="img" autocomplete="off" require />
                                 </div>
                                 <br>
-
-                               
-
+                                
+                                <!-- create feature form with unlimited input on mongodb -->
                                 <div id="att-form">
                                     <input type="text" id="mongoLength" name="mongoLength">
-                                </div>          
-                                
+                                </div>
+
                                 <br>
                                 <button type="submit" name="create" class="btn btn-info">Create</button>
                             </form>
-                                <button class="get-input-att" onclick="newinput()">+</button>
+
+                            <!-- add feature button -->
+                            <button class="get-input-att" onclick="newinput()">+</button>
                         </div>
                         <!--End Advanced Tables -->
                     </div>
@@ -294,6 +308,7 @@ if (strlen($_SESSION['login']) == 0) {
     </body>
 
     </html>
+    <!-- set limit time for bidding (bidding time = current time + 5 minutes) -->
     <script>
         let newDate = new Date().valueOf()
         let t = newDate + 86700000 - 61200000
@@ -301,6 +316,7 @@ if (strlen($_SESSION['login']) == 0) {
         document.getElementById('end_time').min = newDate
     </script>
 
+    <!-- create input form for extra attributes for product -->
     <script>
         var id = 0;
         var newinput = function() {
@@ -309,7 +325,7 @@ if (strlen($_SESSION['login']) == 0) {
             var field = document.createElement("input")
             var attName = document.createElement("input")
 
-            header.innerHTML = "Feature "+ id
+            header.innerHTML = "Feature " + id
 
             //Attribute name
             attName.id = "attName" + id;
@@ -332,7 +348,7 @@ if (strlen($_SESSION['login']) == 0) {
             id += 1;
             document.getElementById('mongoLength').value = id
 
-            
+
         }
     </script>
 <?php } ?>

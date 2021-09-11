@@ -9,8 +9,10 @@ if (isset($_POST['login'])) {
 
     //ensure fields are not empty
     $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
+    // hash admin input pwd with md5
     $password = !empty(md5($_POST['password'])) ? trim(md5($_POST['password'])) : null;
 
+    //compare email and pwd to login as admin
     $sql = "SELECT email, password FROM admin WHERE email= :email and password= :password";
     $query = $pdo->prepare($sql);
 
@@ -49,6 +51,7 @@ if (isset($_POST['login'])) {
     <!------MENU SECTION START-->
     <?php include('includes/header.php'); ?>
     <!-- MENU SECTION END-->
+    <!-- create admin login form -->
     <div class="content-wrapper">
         <div class="container">
             <div class="row pad-botm">

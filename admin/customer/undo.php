@@ -2,12 +2,14 @@
 session_start();
 error_reporting(0);
 include('../../includes/data_connect.php');
+// make sure admin signed in
 if (strlen($_SESSION['alogin']) == 0) {
     header('location:../../index.php');
 } else {
-    // Undo transaction
+    // get auction id when choose undo transaction
     $id = $_GET['undo'];
-    // Get customer and seller id to reset balance
+
+    // Get customer id, seller id and current price to reset balance
     $sql = "SELECT customer_id, seller_id, current_price FROM auction WHERE id= :id";
     $query = $pdo->prepare($sql);
 
@@ -34,6 +36,7 @@ if (strlen($_SESSION['alogin']) == 0) {
         $query2->bindParam(':seller', $seller, PDO::PARAM_STR);
         $query2->bindParam(':price', $price, PDO::PARAM_STR);
         if ($query2->execute()) {
+            //set already undo data for this auction
             $sql3 = "UPDATE auction SET isUndo= 1 WHERE id= :id";
             $query3 = $pdo->prepare($sql3);
 

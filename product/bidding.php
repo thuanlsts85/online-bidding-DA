@@ -2,6 +2,7 @@
 session_start();
 error_reporting(0);
 include('../includes/data_connect.php');
+//make sure user signed in
 if (strlen($_SESSION['login']) == 0) {
       header('location:../index.php');
 } else {
@@ -30,6 +31,7 @@ if (strlen($_SESSION['login']) == 0) {
             <div class="bidding-page">
                   <div class="bidding">
                   <h1>Current Bidding Product</h1>
+                  <!-- create sort function for end time, current price, bid count -->
                         <div class="sort">
                         <b>Sort product by:</b>
                         <form method="post" class="sort_att">
@@ -37,6 +39,7 @@ if (strlen($_SESSION['login']) == 0) {
                                     <a href="bidding.php?sort=current_price" name="sort">Current Price</a>
                                     <a href="bidding.php?sort=count_bid" name="sort">Bidding Times</a>
                         </form>
+                        <!-- clear button to return default order - ASC -->
                         <a href="bidding.php"><button>CLEAR</button></a>
                         </div>
                         
@@ -44,13 +47,13 @@ if (strlen($_SESSION['login']) == 0) {
                               <?php
                                     
                               $id = $_SESSION['id'];
-                             
-                              $sql = "SELECT p.id as product_id, p.name, c.name as cat_name, description, end_time, start_price, current_price, img, p.date_created, status, count_bid 
+                             // get data for each product card
+                              $sql = "SELECT p.id as product_id, p.name, c.name as cat_name, description, end_time, start_price, current_price, img, status, count_bid 
                                           FROM product p JOIN category c ON p.category_id = c.id JOIN auction a ON p.id = product_id 
                                           WHERE status = 1 AND uid <> :id AND end_time-now()>0";
 
                               if(isset($_GET['sort']) && strlen(trim($_GET['sort'])) > 0){
-                                    //need to protect this because it is not a string being prepared...
+                                    //need to protect this because it is not a string being prepared
                                     $sort = addslashes(trim($_GET['sort']));
                                     $sql .= " ORDER BY $sort DESC";
                               }else{$sql;}
@@ -92,6 +95,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                       <p class="close">Close At:
                                                             <?php echo htmlentities($result->end_time); ?>
                                                       </p>
+                                                      <!-- get data from mongodb -->
                                                       <?php
                                                       $features = $collection->find(['_id' => $result->product_id]);
                                                       foreach ($features as $one) {

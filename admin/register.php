@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 require '../includes/data_connect.php'; //require connection script
 
  if(isset($_POST['submit'])){  
@@ -54,9 +54,9 @@ require '../includes/data_connect.php'; //require connection script
 }
      }
 
-?>
+?> -->
 
-  <form class="form-horizontal" action="register.php" method="post">
+  <!-- <form class="form-horizontal" action="register.php" method="post">
 	<h1>Admin Registration</h1>
 
     <div class="form-group">
@@ -115,4 +115,4 @@ require '../includes/data_connect.php'; //require connection script
       <button type="submit" name="submit" class="btn btn-primary">Submit</button>
     </div>
   </div>
-</form>
+</form> -->

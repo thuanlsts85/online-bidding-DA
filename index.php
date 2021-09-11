@@ -9,6 +9,7 @@ if (isset($_POST['login'])) {
 
   //ensure fields are not empty
   $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
+  //has input pwd from user to compare with pwd on db
   $password = !empty(md5($_POST['password'])) ? trim(md5($_POST['password'])) : null;
 
   //Retrieve the user account information for the given email + password.
@@ -26,6 +27,7 @@ if (isset($_POST['login'])) {
     echo '<script>alert("invalid email or password")</script>';
   } else {
 
+    // check active user account
     $_SESSION['id'] = $result['id'];
     if ($result['status'] == 1) {
       $_SESSION['login'] = $email;
@@ -68,6 +70,7 @@ if (isset($_POST['login'])) {
       </div>
 
       <!--LOGIN PANEL START-->
+      <!-- create login form -->
       <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
           <div class="panel panel-info">

@@ -2,6 +2,7 @@
 session_start();
 include('includes/data_connect.php');
 error_reporting(0);
+//make sure user signed in
 if (strlen($_SESSION['login']) == 0) {
   header('location:index.php');
 } else {
@@ -28,7 +29,8 @@ if (strlen($_SESSION['login']) == 0) {
       $target = "assets/img/" . basename($_FILES['img']['name']);
 
       $img = $_FILES['img']['name'];
-
+      
+      //update image profile
       $sql = "UPDATE customer SET img= :img WHERE id= :id";
       $query = $pdo->prepare($sql);
 
@@ -36,7 +38,8 @@ if (strlen($_SESSION['login']) == 0) {
       $query->bindParam(':img', $img, PDO::PARAM_STR);
 
       $query->execute();
-
+      
+      //add new img to selected folder
       if (move_uploaded_file($_FILES['img']['tmp_name'], $target)) {
         echo '<script>alert("Your image profile has been updated")</script>';
         echo "<script type='text/javascript'> document.location ='profile.php'; </script>";
@@ -112,6 +115,8 @@ if (strlen($_SESSION['login']) == 0) {
           <div class="col-md-9 col-md-offset-1">
             <div class="panel panel-danger">
               <div class="panel-body">
+
+                <!-- create profile form that receive input from user -->
                 <form name="signup" method="post" enctype="multipart/form-data">
                   <?php
                   $id = $_SESSION['id'];

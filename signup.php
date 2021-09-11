@@ -19,9 +19,11 @@ if (isset($_POST['signup'])) {
         $address = $_POST['address'];
         $img = $_FILES['img']['name'];
         $email = $_POST['email'];
+        // hash pwd with md5
         $password = md5($_POST['password']);
         $status = 1;
 
+        // add new customer to db
         $sql = "INSERT INTO customer (`id`, `Fname`, `Lname`, `password`, `email`, `phone`, `balance`, `country`, `branch_id`, `address`, `img`, `status`) 
                         VALUES(:id,:Fname,:Lname,:password,:email,:phone,:balance,:country,:branch_id,:address,:img,:status)";
         $query = $pdo->prepare($sql);
@@ -41,6 +43,7 @@ if (isset($_POST['signup'])) {
 
         $query->execute();
 
+        //move img file to selected folder
         if (move_uploaded_file($_FILES['img']['tmp_name'], $target)) {
             echo '<script>alert("User account created.")</script>';
             echo "<script type='text/javascript'> document.location ='index.php'; </script>";
@@ -71,6 +74,7 @@ if (isset($_POST['signup'])) {
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <script type="text/javascript">
         function valid() {
+            // check pwd and confirm pwd matching
             if (document.signup.password.value != document.signup.confirmpassword.value) {
                 alert("Password and Confirm Password do not match  !!");
                 document.signup.confirmpassword.focus();
@@ -80,6 +84,7 @@ if (isset($_POST['signup'])) {
         }
     </script>
     <script>
+        //set check existed email function
         function checkAvailability() {
             $("#loaderIcon").show();
             jQuery.ajax({
@@ -105,6 +110,7 @@ if (isset($_POST['signup'])) {
         <div class="container">
             <div class="row pad-botm">
                 <div class="col-md-12">
+                    <!-- create customer signup form -->
                     <h4 class="header-line">User Signup Form</h4>
                 </div>
             </div>

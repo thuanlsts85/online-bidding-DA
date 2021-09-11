@@ -117,14 +117,19 @@ DECLARE seller_balance float;
 DECLARE cus_balance float;
 DECLARE cur_price float;
 DECLARE duration float;
+DECLARE isClose TINYINT;
 START TRANSACTION;
 
 SELECT balance INTO seller_balance FROM customer c JOIN auction a ON c.id = seller_id WHERE a.id = auctionID;
 SELECT balance INTO cus_balance FROM customer c JOIN auction a ON c.id = customer_id WHERE a.id = auctionID;
 SELECT current_price INTO cur_price FROM auction WHERE id = auctionID;
 SELECT end_time - now() INTO duration FROM product p JOIN auction a ON p.id = product_id WHERE a.id = auctionID;
+SELECT p.status INTO isClose FROM product p JOIN auction a ON p.id = product_id WHERE a.id = auctionID;
 
 IF duration > 0 THEN
+ROLLBACK;
+
+ELSEIF isClose = 0 THEN
 ROLLBACK;
 
 ELSE
@@ -149,7 +154,6 @@ BEGIN
 END$$    
 DELIMITER ;
 
--- BIDDING PROCESS TRIGGER
 -- Trigger check bid amount
 DELIMITER $$
 CREATE TRIGGER before_bid

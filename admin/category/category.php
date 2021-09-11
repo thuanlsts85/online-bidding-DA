@@ -6,8 +6,10 @@ if (strlen($_SESSION['alogin']) == 0) {
     header('location:../../index.php');
 } else {
     if (isset($_GET['del'])) {
+        // get category id when choose delete
         $id = $_GET['del'];
 
+        //delete selected category
         $sql = "DELETE from category  WHERE id= :id";
         $query = $pdo->prepare($sql);
 
@@ -47,6 +49,8 @@ if (strlen($_SESSION['alogin']) == 0) {
                     <div class="col-md-12">
                         <h4 class="header-line">Manage Categories</h4>
                     </div>
+
+                    <!-- set notification for all function status -->
                     <div class="row">
                         <?php if ($_SESSION['error'] != "") { ?>
                             <div class="col-md-6">
@@ -107,8 +111,8 @@ if (strlen($_SESSION['alogin']) == 0) {
                             <div class="panel-heading">
                                 Categories Listing
                             </div>
-                            <!-- <a href="add-category.php"><button>Add Category</button></a> -->
-
+                            
+                            <!-- category table -->
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -121,6 +125,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <!-- get all category from db -->
                                             <?php $sql = "SELECT * from category";
                                             $query = $pdo->prepare($sql);
                                             $query->execute();
@@ -143,7 +148,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                         </tbody>
                                     </table>
 
-                                    <!-- Add Category -->
+                                    <!-- Add Category FORM -->
                                     <form role="form" method="post" action="add-category.php">
                                         <div class="form-group">
                                             <label><b>New Category</b></label>

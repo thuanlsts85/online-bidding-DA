@@ -2,6 +2,7 @@
 session_start();
 error_reporting(0);
 include('../../includes/data_connect.php');
+//make sure admin signed in
 if (strlen($_SESSION['alogin']) == 0) {
     header('location:../../index.php');
 } else {
@@ -29,6 +30,7 @@ if (strlen($_SESSION['alogin']) == 0) {
     <body>
         <?php include('../includes/header.php'); ?>
         <!-- MENU SECTION END-->
+        <!-- table list of all customer -->
         <div class="content-wrapper">
             <div class="container">
                 <div class="row pad-botm">
@@ -54,6 +56,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                     </thead>
                                     <tbody>
 
+                                        <!-- get all information from customer table -->
                                         <?php
                                         $sql = "SELECT id, Fname, Lname, email, phone, country, branch_id, img, status, balance
                                                     FROM customer";

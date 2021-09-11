@@ -4,10 +4,12 @@ error_reporting(0);
 include('includes/data_connect.php');
 if (isset($_POST['change'])) {
 
+    // get input from user
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $id = $_POST['id'];
 
+    // hash new pwd with md5
     $newpassword = md5($_POST['newpassword']);
 
     $sql = "SELECT email FROM customer WHERE email= :email AND phone= :phone AND id= :id";
@@ -23,6 +25,7 @@ if (isset($_POST['change'])) {
     $result = $query->fetch(PDO::FETCH_ASSOC);
 
     if ($query->rowCount() > 0) {
+        // update new pwd after confirming right user
         $con = "UPDATE customer SET password= :newpassword WHERE email= :email AND phone= :phone AND id= :id";
         $chngpwd1 = $pdo->prepare($con);
 
@@ -56,6 +59,7 @@ if (isset($_POST['change'])) {
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <script type="text/javascript">
         function valid() {
+            // confirm new pwd
             if (document.chngpwd.newpassword.value != document.chngpwd.confirmpassword.value) {
                 alert("New Password and Confirm Password Field do not match  !!");
                 document.chngpwd.confirmpassword.focus();
@@ -80,6 +84,7 @@ if (isset($_POST['change'])) {
             </div>
 
             <!--LOGIN PANEL START-->
+            <!-- create change pwd form -->
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                     <div class="panel panel-info">

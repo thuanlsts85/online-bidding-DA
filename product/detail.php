@@ -2,27 +2,30 @@
 session_start();
 error_reporting(0);
 include('../includes/data_connect.php');
+//make sure user signed in
 if (strlen($_SESSION['login']) == 0) {
     header('location:../index.php');
 } else {
     if (isset($_POST['bid'])) {
         try {
+            // receive user id from session and product id when choose view button
             $cus_id = $_SESSION['id'];
             $productID = $_GET['view'];
 
             // Get data from the input form
             $bid_amount = $_POST['bid_amount'];
 
+            // run checking valid bidding procedure
             $sql = "CALL valid_bidding(:cus_id,:productID,:bid_amount)";
             $query = $pdo->prepare($sql);
 
-            // $query->bindParam(':id', $id, PDO::PARAM_STR);
             $query->bindParam(':cus_id', $cus_id, PDO::PARAM_STR);
             $query->bindParam(':productID', $productID, PDO::PARAM_STR);
             $query->bindParam(':bid_amount', $bid_amount, PDO::PARAM_INT);
 
             $query->execute();
 
+            //make sure current_price is updated by customer bidding input
             $sql1 = "SELECT * FROM auction WHERE product_id = :productID";
             $query1 = $pdo->prepare($sql1);
             $query1->bindParam(':productID', $productID, PDO::PARAM_STR);
@@ -65,6 +68,7 @@ if (strlen($_SESSION['login']) == 0) {
 
         <?php
         $productID = $_GET['view'];
+        //get product detail
         $sql = "SELECT name, description, uid, customer_id, product_id, end_time, start_price, current_price, img, p.date_created as start_time 
                 FROM product p JOIN auction ON p.id = product_id WHERE p.id= :id";
         $query = $pdo->prepare($sql);
@@ -76,6 +80,7 @@ if (strlen($_SESSION['login']) == 0) {
         if ($query->rowCount() > 0) {
             foreach ($results as $result) {
         ?>
+                <!-- display all information belong to selected product -->
                 <div class="container" style="background-color: #eee; padding: 20px;">
                     <div class="row">
                         <div class="col-md-1"></div>

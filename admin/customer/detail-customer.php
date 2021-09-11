@@ -2,6 +2,7 @@
 session_start();
 error_reporting(0);
 include('../../includes/data_connect.php');
+// make sure user signed in
 if (strlen($_SESSION['alogin']) == 0) {
     header('location:../../index.php');
 } else {
@@ -47,6 +48,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
         <?php
         $id = $_GET['view'];
+        //get detail information of selected customer
         $sql = "SELECT Fname, Lname, balance, img
                 FROM customer 
                 WHERE id= :id";
@@ -70,6 +72,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                 <b><?php echo htmlentities($result->Lname); ?></b>
                             </div>
 
+                            <!-- input form for updating customer balance -->
                             <form action="#" name="update" method="post">
                                 <div class="form-group">
                                     <label>Balance (VND)</label>
@@ -82,6 +85,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
                         <div class="col-md-1"></div>
 
+                        <!-- win bidding history of selected customer -->
                         <div class="col-md-7">
                             <h4 class="text-center">Bidding History of 
                             <?php echo $id; ?>
@@ -102,6 +106,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                         </thead>
 
                                         <tbody>
+                                            <!-- get bidding information of selected customer -->
                                             <?php
                                             $sql = "SELECT a.id as auction_id, seller_id, current_price, img, name, product_id, isUndo
                                                 FROM auction a JOIN product p ON p.id = a.product_id
@@ -120,6 +125,8 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                         <td class="center"><?php echo htmlentities($result->current_price); ?></td>
                                                         <td class="center">WIN</td>
                                                         <td class="center"><?php echo htmlentities($result->seller_id); ?></td>
+
+                                                        <!-- set condition for admin that only can undo 1 time -->
                                                         <?php if($result->isUndo==0) { ?>
                                                         <td class="center">
                                                             <div class="button" onclick="return confirm('Are you sure you want to undo transaction?');">

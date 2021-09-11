@@ -1,4 +1,5 @@
  <!-- LOGO HEADER END-->
+ <!-- header for signed in user -->
  <?php if ($_SESSION['login']) {
     ?>
      <section class="menu-section">
@@ -43,6 +44,7 @@
          </div>
      </section>
  <?php } else { ?>
+    <!-- header for none sign in user -->
      <section class="menu-section">
          <div class="container">
              <div class="row ">
