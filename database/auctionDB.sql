@@ -118,7 +118,7 @@ SELECT start_price INTO first_price FROM product WHERE id = productID;
 if cus_balance < bid_amount then
 rollback;
 
-elseif (bid_amount < first_price or bid_amount = first_price) then
+elseif (bid_amount < first_price) then
 rollback;
 
 elseif (duration < 0 or duration = 0) then

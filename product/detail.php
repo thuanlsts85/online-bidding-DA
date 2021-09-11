@@ -33,7 +33,7 @@ if (strlen($_SESSION['login']) == 0) {
 
             $result = $query1->fetch(PDO::FETCH_ASSOC);
             if ($result['current_price'] != $bid_amount) {
-                echo '<script>alert("Fail: Your bid must be higher than start price")</script>';
+                echo '<script>alert("Fail: Unavailable bid amount")</script>';
                 echo "<script type=text/javascript'> document.location ='detail.php?view=$productID'; </script>";
             } else {
                 echo '<script>alert("Bidding Success")</script>';

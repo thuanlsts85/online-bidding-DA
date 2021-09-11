@@ -13,7 +13,7 @@ if (isset($_POST['signup'])) {
         $Fname = $_POST['Fname'];
         $Lname = $_POST['Lname'];
         $phone = $_POST['phone'];
-        $balance = $_POST['balance'];
+        $balance = 0;
         $country = $_POST['country'];
         $branch_id = $_POST['branch_id'];
         $address = $_POST['address'];
@@ -147,10 +147,10 @@ if (isset($_POST['signup'])) {
                                     <span id="user-availability-status" style="font-size:12px;"></span>
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label>Balance :</label>
                                     <input class="form-control" type="number" name="balance" autocomplete="off" required />
-                                </div>
+                                </div> -->
 
                                 <div class="form-group">
                                     <label>Enter Address</label>
@@ -187,9 +187,9 @@ if (isset($_POST['signup'])) {
                                         <label>Confirm Password </label>
                                         <input class="form-control" type="password" name="confirmpassword" autocomplete="off" required />
                                     </div>
-
+                                    <br>
                                     <button type="submit" name="signup" class="btn btn-danger" id="submit">Register Now </button>
-
+                                   
                             </form>
                         </div>
                     </div>

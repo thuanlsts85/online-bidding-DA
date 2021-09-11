@@ -129,17 +129,17 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                         <!-- set condition for admin that only can undo 1 time -->
                                                         <?php if($result->isUndo==0) { ?>
                                                         <td class="center">
-                                                            <div class="button" onclick="return confirm('Are you sure you want to undo transaction?');">
+                                                            <div class="button" onclick="return confirm('Are you sure you want to cancel transaction?');">
                                                                 <a href="undo.php?undo=<?php echo htmlentities($result->auction_id); ?>">
-                                                                    UNDO
+                                                                    CANCEL
                                                                 </a>
                                                             </div>
                                                         </td>
                                                         <?php } else{ ?>
                                                             <td class="center">
-                                                            <div class="button" onclick="return confirm('Already Undo');">
+                                                            <div class="button" onclick="return confirm('Already Canceled');">
                                                                 <a>
-                                                                    DISUNDO
+                                                                    CANCELED
                                                                 </a>
                                                             </div>
                                                         </td>

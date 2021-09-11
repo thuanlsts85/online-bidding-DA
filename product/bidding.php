@@ -38,11 +38,11 @@ if (strlen($_SESSION['login']) == 0) {
                                     <div class="sort-url"></div>
                                     <a class="sort-item" href="bidding.php?sort=end_time" name="sort" style="text-decoration: none;">Close Time</a>
                                     <a class="sort-item" href="bidding.php?sort=current_price" name="sort">Current Price</a>
-                                    <a class="sort-item" href="bidding.php?sort=count_bid" name="sort">Bidding Times</a>
+                                    <a class="sort-item" href="bidding.php?sort=count_bid" name="sort">Bid Counts</a>
 
                               </form>
                               <!-- clear button to return default order - ASC -->
-                              <a href="bidding.php"><button>CLEAR</button></a>
+                              <a class="sort-item" href="bidding.php?sor1=end_time" name="sor1"><button>CLEAR</button></a>
                         </div>
 
                         <div class="content">
@@ -52,13 +52,20 @@ if (strlen($_SESSION['login']) == 0) {
                               // get data for each product card
                               $sql = "SELECT p.id as product_id, p.name, c.name as cat_name, description, end_time, start_price, current_price, img, status, count_bid 
                                           FROM product p JOIN category c ON p.category_id = c.id JOIN auction a ON p.id = product_id 
-                                          WHERE status = 1 AND uid <> :id AND end_time-now()>0";
+                                          WHERE status = 1 AND uid <> :id AND end_time-now()>0
+                                          ";
 
                               if (isset($_GET['sort']) && strlen(trim($_GET['sort'])) > 0) {
                                     //need to protect this because it is not a string being prepared
                                     $sort = addslashes(trim($_GET['sort']));
                                     $sql .= " ORDER BY $sort DESC";
-                              } else {
+                              } 
+                                    elseif (isset($_GET['sor1']) && strlen(trim($_GET['sor1'])) > 0) {
+                                          //need to protect this because it is not a string being prepared
+                                          $sort1 = addslashes(trim($_GET['sor1']));
+                                          $sql .= " ORDER BY $sort1 ASC";
+                              } 
+                              else {
                                     $sql;
                               }
 
@@ -82,7 +89,7 @@ if (strlen($_SESSION['login']) == 0) {
                                                       <h2 class="name">
                                                             <?php echo htmlentities($result->name) ?>
                                                       </h2>
-                                                      <p class="bid">Bid times:
+                                                      <p class="bid">Number of Bid:
                                                             <?php echo htmlentities($result->count_bid); ?>
                                                       </p>
                                                       <p class="status">Status:
