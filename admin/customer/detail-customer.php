@@ -67,7 +67,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
                         <div class="col-md-3">
                             <p><?php echo "<img src='../../assets/img/" . htmlentities($result->img) . "' style='height: 300px; width: 300px'> " ?></p>
-                            <div style="display: flex;">
+                            <div style="display: flex; gap:5px; justify-content:center">
                                 <b><?php echo htmlentities($result->Fname); ?></b>
                                 <b><?php echo htmlentities($result->Lname); ?></b>
                             </div>

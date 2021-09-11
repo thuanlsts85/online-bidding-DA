@@ -202,13 +202,29 @@ body {
 
 .sort {
     display: flex;
-    padding: 0.25rem 2rem;
-    flex-wrap: nowrap;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.sort_att{
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
 }
 
 .sort_att a{
     text-decoration: none;
-    padding: 0 2rem;
+}
+
+.sort-url {
+    margin-left: 10px;
+    font-weight: bold;
+    color: red;
+    text-transform: capitalize;
+    text-decoration: underline;
+    font-size: larger;
+    font-style: italic;
+    text-shadow: 4px 4px 4px #aaa;
 }
 
 .card {
@@ -217,6 +233,7 @@ body {
     min-width: 280px;
     max-width: 300px;
     border-radius: 10px;
+    margin-bottom: 1.5rem;
 }
 
 .card .info {

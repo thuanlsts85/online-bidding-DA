@@ -1,1 +1,4 @@
-# online-bidding-DA
+# Contributions
+All contributions are the same
+
+# Demonstration video
