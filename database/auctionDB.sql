@@ -12,7 +12,12 @@ CREATE TABLE `product` (
   primary key(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
+INSERT INTO product(uid, category_id, name, description, end_time, start_price, img) VALUES
+('025861339', 1, 'ROG laptop', 'Limited Edition with LOL pattern, only 10 pieces in the world', '2021-09-20 16:29:01', 800, 'laptop.jpg'),
+('025861339', 2, 'Off White hoodie', 'Like New, used only 1 time', '2021-09-19 16:29:01', 500, 'shirt.jpg'),
+('025861339', 3, 'R.M Ball', 'Ball with signatures of Real Madrid team', '2021-09-21 16:29:01', 1000, 'ball.jpg'),
+('025861339', 4, 'Harry Potter book set', 'New Seal, Full set of Harry Potter series', '2021-09-16 16:29:01', 600, 'book.jpg'),
+('025861339', 5, '"Horse" painting', 'Painting of the artist in near deadline', '2021-09-17 16:29:01', 40, 'painting.jpg');
 
 CREATE TABLE `category` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -21,7 +26,8 @@ CREATE TABLE `category` (
   primary key(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
+INSERT INTO category(name) VALUES
+('Electronic Device'), ('Fashion'), ('Sport'), ('Book'), ('Kid'), ('Art'), ('Others');
 
 CREATE TABLE `customer` (
   `id` varchar(30) NOT NULL,
@@ -40,6 +46,11 @@ CREATE TABLE `customer` (
   primary key(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO customer(id, Fname, Lname, password, email, phone, balance, country, branch_id, address, img, status) VALUES
+('025861339', 'user', '1', 'e10adc3949ba59abbe56e057f20f883e', 'user1@gmail.com', '0776345329', 4000, 'Vietnam', 3, '1514A Huỳnh Tấn Phát, phường Phú Mỹ, quận 7', 'user1.png', 1),
+('025861340', 'user', '2', 'e10adc3949ba59abbe56e057f20f883e', 'user2@gmail.com', '0776345330', 4500, 'Vietnam', 2, '1514A Huỳnh Tấn Phát, phường Phú Mỹ, quận 7', 'user2.png', 1),
+('025861341', 'user', '3', 'e10adc3949ba59abbe56e057f20f883e', 'user3@gmail.com', '0776345331', 5000, 'Vietnam', 1, '1514A Huỳnh Tấn Phát, phường Phú Mỹ, quận 7', 'user3.png', 1);
+
 CREATE TABLE `admin` (
   `id` varchar(30) NOT NULL,
   `Fname` varchar(30) NOT NULL,
@@ -52,15 +63,22 @@ CREATE TABLE `admin` (
   primary key(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO admin(id, Fname, Lname, password, email, phone, branch_id) VALUES
+('0258523150', 'Admin', 'Admin', 'e10adc3949ba59abbe56e057f20f883e', 'admin@gmail.com', '0776345320', 1);
+
 CREATE TABLE `branch` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `city` varchar(10) NOT NULL UNIQUE,
+  `city` varchar(30) NOT NULL UNIQUE,
   `address` text NOT NULL,
   `hotline` int NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   primary key(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO branch(city, address, hotline) VALUES
+('Ho Chi Minh', '702 nguyen van linh', '113'),
+('Da Nang', '702 nguyen van linh', '114'),
+('Ha Noi', '702 nguyen van linh', '115');
 
 CREATE TABLE `auction` (
     `id` INT NOT NULL AUTO_INCREMENT,
@@ -75,18 +93,25 @@ CREATE TABLE `auction` (
 	PRIMARY KEY (`id`)
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
 
--- Check ability to bid
+INSERT INTO auction(seller_id, product_id) VALUES
+('025861339', 1),
+('025861339', 2),
+('025861339', 3),
+('025861339', 4),
+('025861339', 5);
+
+
+-------------------------------- PROCEDURE START BIDDING 
+-- Let customer bid after checking ability to bid
 DELIMITER $$
 CREATE PROCEDURE valid_bidding (IN cus_id VARCHAR(30), IN productID INT, IN bid_amount float)
 BEGIN
 DECLARE cus_balance float;
 DECLARE duration float;
 DECLARE first_price float;
-DECLARE cur_price float;
 START TRANSACTION;
 
 SELECT balance INTO cus_balance FROM customer c WHERE c.id=cus_id;
-SELECT current_price INTO cur_price FROM auction a WHERE a.product_id=productID;
 SELECT end_time - now() INTO duration FROM product WHERE id = productID;
 SELECT start_price INTO first_price FROM product WHERE id = productID;
 
@@ -94,9 +119,6 @@ if cus_balance < bid_amount then
 rollback;
 
 elseif (bid_amount < first_price or bid_amount = first_price) then
-rollback;
-
-elseif (bid_amount = cur_price) then
 rollback;
 
 elseif (duration < 0 or duration = 0) then
@@ -109,7 +131,8 @@ end if;
 END $$
 DELIMITER ;
 
--- Finish transaction when bidding close
+-------------------------------- PROCEDURE END BIDDING
+-- End the auction of the product and make payments on customer and seller balance
 DELIMITER $$
 CREATE PROCEDURE end_bidding (IN auctionID INT)
 BEGIN
@@ -142,7 +165,8 @@ END IF;
 END $$
 DELIMITER ;
 
--- Trigger prevent delete product when in bidding
+-------------------------------- TRIGGER PREVENT DELETE
+-- Make sure the auction must be ended before deleting product 
 DELIMITER $$
 CREATE TRIGGER before_product_delete
 BEFORE DELETE
@@ -154,13 +178,14 @@ BEGIN
 END$$    
 DELIMITER ;
 
--- Trigger check bid amount
+-------------------------------- TRIGGER CHECK BID AMOUNT
+-- The bid amount must be bigger than current price
 DELIMITER $$
 CREATE TRIGGER before_bid
 BEFORE UPDATE
 ON auction FOR EACH ROW
 BEGIN
-   IF OLD.current_price > NEW.current_price THEN
+   IF OLD.current_price > NEW.current_price OR OLD.current_price = NEW.current_price THEN
    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Your bid amount must be higher than current bid amount';
    END IF;
 END$$    
