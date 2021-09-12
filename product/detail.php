@@ -14,6 +14,17 @@ if (strlen($_SESSION['login']) == 0) {
 
             // Get data from the input form
             $bid_amount = $_POST['bid_amount'];
+            
+            $sql2 = "SELECT * FROM auction WHERE product_id = :productID";
+            $query2 = $pdo->prepare($sql2);
+            $query2->bindParam(':productID', $productID, PDO::PARAM_STR);
+            $query2->execute();
+
+            $result2 = $query2->fetch(PDO::FETCH_ASSOC);
+            if ($result2['current_price']>=$bid_amount){
+                echo '<script>alert("Fail: Bid amount must higher than current price")</script>';
+                echo "<script type=text/javascript'> document.location ='detail.php?view=$productID'; </script>";
+            }else{
 
             // run checking valid bidding procedure
             $sql = "CALL valid_bidding(:cus_id,:productID,:bid_amount)";
@@ -33,17 +44,19 @@ if (strlen($_SESSION['login']) == 0) {
 
             $result = $query1->fetch(PDO::FETCH_ASSOC);
             if ($result['current_price'] != $bid_amount) {
-                echo '<script>alert("Fail: Unavailable bid amount")</script>';
+                echo '<script>alert("Fail: Your bid amount < start price or bidding closed")</script>';
                 echo "<script type=text/javascript'> document.location ='detail.php?view=$productID'; </script>";
             } else {
                 echo '<script>alert("Bidding Success")</script>';
                 echo "<script type=text/javascript'> document.location ='detail.php?view=$productID'; </script>";
             }
+        }
         } catch (PDOException $e) {
             $error = $e->getMessage();
             $err_cut = substr($error, 40);
             echo '<script type="text/javascript">alert("' . $err_cut . '");</script>';
         }
+    
     }
 ?>
     <!DOCTYPE html>

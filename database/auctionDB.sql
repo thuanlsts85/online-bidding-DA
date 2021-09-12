@@ -118,7 +118,7 @@ SELECT start_price INTO first_price FROM product WHERE id = productID;
 if cus_balance < bid_amount then
 rollback;
 
-elseif (bid_amount < first_price) then
+elseif bid_amount < first_price then
 rollback;
 
 elseif (duration < 0 or duration = 0) then
@@ -185,12 +185,12 @@ CREATE TRIGGER before_bid
 BEFORE UPDATE
 ON auction FOR EACH ROW
 BEGIN
-   IF OLD.current_price > NEW.current_price OR OLD.current_price = NEW.current_price THEN
-   SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Your bid amount must be higher than current bid amount';
+   IF OLD.current_price > NEW.current_price THEN
+   SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Bid amount must higher than current price';
    END IF;
 END$$    
 DELIMITER ;
 
--- add index 
+-- INDEX 
 alter table auction
 add index idx_customer (customer_id);
